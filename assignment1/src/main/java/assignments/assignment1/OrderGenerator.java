@@ -9,14 +9,6 @@ public class OrderGenerator {
     private static String[] listOfOrderDate = new String[10];
     private static boolean isDone = false;
 
-    /* 
-    Anda boleh membuat method baru sesuai kebutuhan Anda
-    Namun, Anda tidak boleh menghapus ataupun memodifikasi return type method yang sudah ada.
-    */
-
-    /*
-     * Method  ini untuk menampilkan menu
-     */
     public static boolean validateDate(String orderDate) {
         if (orderDate.length() == 10) return true;
             else{
@@ -41,7 +33,7 @@ public class OrderGenerator {
             if (Character.isLetter(b))
                 return false;
         }
-        if ((int)phoneNumber>0) return true;
+        if (Integer.parseInt(phoneNumber)>0) return true;
         else return false;
     }
 
