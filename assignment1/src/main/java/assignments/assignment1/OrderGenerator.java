@@ -30,11 +30,10 @@ public class OrderGenerator {
     public static boolean validatePhoneNumber(String phoneNumber){
         for (int i = 0; i < phoneNumber.length(); i++){
             char b = phoneNumber.charAt(i);
-            if (Character.isLetter(b))
-                return false;
+            if (Character.isDigit(b));
+            else return false;
         }
-        if (Integer.parseInt(phoneNumber)>0) return true;
-        else return false;
+        return true;
     }
 
     public static int validateOrderId (String orderId) {
