@@ -98,7 +98,7 @@ public class OrderGenerator {
         for(int i=0; i<phoneNumber.length(); i++ ) {
             total += Character.getNumericValue(phoneNumber.charAt(i)); 
         }
-        if (total % 10 < 10) return "0" + total % 100; 
+        if (total % 100 < 10) return "0" + total % 100; 
         else return "" + total % 100;
     }
 
