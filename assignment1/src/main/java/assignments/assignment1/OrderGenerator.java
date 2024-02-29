@@ -4,28 +4,43 @@ import java.util.Scanner;
 
 public class OrderGenerator {
     private static final Scanner input = new Scanner(System.in);
-    private static int indexOflist = 0;
+    private static int indexOfArray = 0;
     private static boolean isStillLooping = true;
-    private static String[] listOfOrderId = {"null","null","null","null","null","null","null","null","null","null"};
+    private static String[] arrayOfOrderId = {"","","","","","","","","",""};
 
+    /*
+     * Method ini memvalidasi tanggal yang diinput user:
+     * - Parameter: String orderDate
+     * - Return: boolean
+     *    1. Jika panjang tanggal bukan 10, maka return false
+     *    2. Jika karakter ke-3 dan ke-6 bukan '/', maka return false
+     *    3. Jika karakter selain '/' adalah bukan angka, maka return false
+     *    4. Jika semua validasi di atas terlewati, maka return true
+    */
     public static boolean validateDate(String orderDate) {
-        if (orderDate.length() == 10) return true;
-            else{
-            for (int i = 0; i < orderDate.length(); i++){
-                char b = orderDate.charAt(i);
-                if(i==2 || i==5){
-                    if (b != '/')
-                        return false;
-                }
-                else {
-                    if (Character.isDigit(b));
-                    else return false;
-                }
+        if (orderDate.length() == 10);
+        else return false;
+        for (int i = 0; i < orderDate.length(); i++){
+            char b = orderDate.charAt(i);
+            if(i==2 || i==5){
+                if (b != '/')
+                    return false;
             }
-            return true;
+            else {
+                if (Character.isDigit(b));
+                else return false;
+            }
         }
+        return true;
     }
 
+    /*
+     * Method ini memvalidasi nomor telepon yang diinput user:
+     * - Parameter: String phoneNumber
+     * - Return: boolean
+     *    1. Jika ada karakter bukan angka, maka return false
+     *    2. Jika semua karakter adalah angka, maka return true
+    */
     public static boolean validatePhoneNumber(String phoneNumber){
         for (int i = 0; i < phoneNumber.length(); i++){
             char b = phoneNumber.charAt(i);
@@ -35,17 +50,32 @@ public class OrderGenerator {
         return true;
     }
 
+    /*
+     * Method ini memvalidasi Order ID yang diinput user:
+     * - Parameter: String orderId
+     * - Return: int
+     *    1. Jika panjang Order ID kurang dari 16, maka return kode error 11 (melampaui index array)
+     *    2. Jika Order ID tidak ada di dalam list, maka return kode error 22 (tidak ada di dalam list)
+     *    3. Jika Order ID ada di dalam list, maka return index dari Order ID tersebut
+     */
     public static int validateOrderId (String orderId) {
-        if (orderId.length()<16) return 11; // Validasi error karena orderId kurang dari 16 karakter
+        if (orderId.length()<16) return 11; 
         else{
             for (int i = 0; i < 10; i++) {
-                if (listOfOrderId[i].equals(orderId))
+                if (arrayOfOrderId[i].equals(orderId))
                     return i;
             }
            return 22;
         }
     }
 
+    /*
+     * Method ini memvalidasi lokasi yang diinput user:
+     * - Parameter: String location
+     * - Return: String
+     *    1. Jika lokasi tidak valid (bukan dalam pilihan yang ada), maka return "0" (kode error)
+     *    2. Jika lokasi valid, maka return biaya ongkos kirim sesuai lokasi
+     */
     public static String validateLocation (String location){
         switch(location.toUpperCase()) {
             case "P": return "Rp 10.000";
@@ -57,31 +87,53 @@ public class OrderGenerator {
         }
     }
 
-    public static int phoneToId (String phoneNumber) {
+    /*
+     * Method ini menghitung total dari nomor telepon yang diinput user dan mengembalikan hasil modulo 100
+     * - Parameter: String phoneNumber
+     * - Return: int
+     *   1. Menjumlahkan semua digit dari nomor telepon dan mengembalikan hasil modulo 100
+     */
+    public static String phoneToId (String phoneNumber) {
         int total = 0;
         for(int i=0; i<phoneNumber.length(); i++ ) {
             total += Character.getNumericValue(phoneNumber.charAt(i)); 
         }
-        return total % 100;
+        if (total % 10 < 10) return "0" + total % 100; 
+        else return "" + total % 100;
     }
 
-    public static char checksum (String rawId, int oddEven) { // odd = 1, even =0.
+    /*
+     * Method ini menghitung checkSum dari Order ID yang diinput user
+     * - Parameter: String rawId (Order ID)
+     *              int oddEven (1 = odd, 0 = even)
+     * - Return: char
+     * 1. Jika total dari Order ID adalah angka, maka return nilai desimal ASCII - 48 (karena angka 0-9 berada di range 48-57)
+     * 2. Jika total dari Order ID adalah huruf, maka return nilai desimal ASCII - 55 (karena huruf A-Z berada di range 65-90)
+     * 3. Program menghitung total dari Order ID dengan cara menjumlahkan semua digit ganjil (oddEven = 1) atau genap (oddEven = 0)
+     * 4. Jika total modulo 36 kurang dari 10 (karakter numerik), maka return hasil modulo tersebut ditambah 48 (untuk mengubah nilai desimal ke ASCII)
+     * 5. Jika total modulo 36 lebih dari 10 (karakter huruf), maka return hasil modulo tersebut ditambah 55 (untuk mengubah nilai desimal ke ASCII)
+     * 6. Method mereturn karakter checkSum mod 36 dari total Order ID
+     */
+    public static char checkSum (String rawId, int oddEven) { 
         int total = 0;
-        int[] listOfCharIn39CharSet = new int[14];
+        int[] arrayOfCharIn39CharSet = new int[14];
         for(int i=0; i<14; i++){
             char c = rawId.charAt(i);
             if (Character.isDigit(c)) 
-                listOfCharIn39CharSet[i] = Integer.valueOf(rawId.charAt(i))-48;
+                arrayOfCharIn39CharSet[i] = Integer.valueOf(rawId.charAt(i))-48;
             else
-                listOfCharIn39CharSet[i] = Integer.valueOf(rawId.charAt(i))-55;
+                arrayOfCharIn39CharSet[i] = Integer.valueOf(rawId.charAt(i))-55;
         }
         for (int index = 0; index < 7; index++) {
-            total += listOfCharIn39CharSet[2*index+oddEven];
+            total += arrayOfCharIn39CharSet[2*index+oddEven];
         }
         if (total%36 < 10) return (char)(total%36+48);
         else return Character.valueOf((char)(total%36+55));
     }
 
+    /*
+     * Method ini digunakan untuk menampilkan menu
+     */
     public static void showMenu(){
         System.out.println(">>=======================================<<");
         System.out.println("|| ___                 ___             _ ||");
@@ -96,6 +148,17 @@ public class OrderGenerator {
         System.out.println("2. Generate Bill");
         System.out.println("3. Keluar");
     }
+
+    /*
+     * Method ini digunakan untuk menampilkan menu dan meminta input dari user
+     * - Parameter: none
+     * - Return: none
+     *    1. Jika user memilih 1, maka akan meminta input nama restoran, tanggal pemesanan, dan nomor telepon
+     *    2. Jika user memilih 2, maka akan meminta input Order ID dan lokasi pengiriman
+     *    3. Jika user memilih 3, maka program akan berhenti
+     *    4. Jika user memilih selain 1, 2, atau 3, maka program akan dimulai ulang
+     *    5. Jika input tidak valid, maka program akan meminta input ulang sebelum melanjutkan ke langkah selanjutnya
+     */
     public static void orderGenerator () {
         showMenu();
         System.out.print("Pilihan menu: ");
@@ -163,10 +226,15 @@ public class OrderGenerator {
     }
 
     /*
-     * Method ini digunakan untuk membuat ID
-     * dari nama restoran, tanggal order, dan nomor telepon
-     * 
-     * @return String Order ID dengan format sesuai pada dokumen soal
+     * Method ini digunakan untuk membuat Order ID
+     * - Parameter: String namaRestoran
+     *              String tanggalOrder
+     *              String noTelepon
+     * - Return: String Order ID sesuai format
+     *    1. Order ID terdiri dari 4 karakter pertama dari nama restoran (huruf kapital)
+     *    2. Kemudian diikuti dengan tanggal pemesanan (DDMMYYYY)
+     *    3. Kemudian diikuti dengan total dari nomor telepon modulo 100
+     *    4. Kemudian diikuti dengan checkSum genap dan ganjil dari Order ID tersebut
      */
     public static String generateOrderID(String namaRestoran, String tanggalOrder, String noTelepon) {
         String orderId = "";
@@ -175,28 +243,24 @@ public class OrderGenerator {
         orderId += tanggalOrder.substring(3,5);
         orderId += tanggalOrder.substring(6,10);
         orderId += phoneToId(noTelepon);
-        orderId += checksum(orderId, 0);
-        orderId += checksum(orderId, 1);
-        listOfOrderId[indexOflist] = orderId;
-        indexOflist++;
+        orderId += checkSum(orderId, 0);
+        orderId += checkSum(orderId, 1);
+        arrayOfOrderId[indexOfArray] = orderId;
+        indexOfArray++;
         return orderId;
     }
 
     /*
-    * Method ini digunakan untuk membuat bill
-     * dari order id dan lokasi
-     * 
-     * @return String Bill dengan format sesuai di bawah:
-     *          Bill:
-     *          Order ID: [Order ID]
-     *          Tanggal Pemesanan: [Tanggal Pemesanan]
-     *          Lokasi Pengiriman: [Kode Lokasi]
-     *          Biaya Ongkos Kirim: [Total Ongkos Kirim]
+    * Method ini digunakan untuk membuat bill dari order id dan lokasi
+     * - Parameter: String orderId
+     *              String lokasi
+     * - Return: String bill sesuai format
+     *   Bill terdiri dari Order ID, tanggal pemesanan, lokasi pengiriman, dan biaya ongkos kirim
      */
-    public static String generateBill(String OrderID, String lokasi){
-        String orderDate = OrderID.substring(4,6) + "/" + OrderID.substring(6, 8) + "/" + OrderID.substring(8, 12);
+    public static String generateBill(String orderId, String lokasi){
+        String orderDate = orderId.substring(4,6) + "/" + orderId.substring(6, 8) + "/" + orderId.substring(8, 12);
         String bill = "Bill:\n";
-        bill += String.format("Order ID: %s\n", OrderID);
+        bill += String.format("Order ID: %s\n", orderId);
         bill += String.format("Tanggal Pemesanan: %s\n", orderDate);
         bill += String.format("Lokasi Pengiriman: %s\n", lokasi.toUpperCase());
         bill += String.format("Biaya Ongkos Kirim: %s\n", validateLocation(lokasi.toUpperCase()));
@@ -208,3 +272,5 @@ public class OrderGenerator {
             orderGenerator();
     }
 }
+
+// DDP_D_2106165660_TheoAnandalemuel_TP1
