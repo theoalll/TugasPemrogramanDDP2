@@ -20,6 +20,7 @@ public class Order {
         for (Menu elem: items) {
             this.items.add(elem);
         }
+        this.orderFinsihed = false;
     }
 
     public String getOrderId () {
@@ -54,12 +55,16 @@ public class Order {
         return this.items;
     }
 
+    public void addItems(Menu menu) {
+        this.items.add(menu);
+    }
+
     public boolean getStatus () {
         return this.orderFinsihed;
     }
 
     public void setStatus (boolean isFinished) {
-        this.orderDate = isFinished;
+        this.orderFinsihed = isFinished;
     }
 
 

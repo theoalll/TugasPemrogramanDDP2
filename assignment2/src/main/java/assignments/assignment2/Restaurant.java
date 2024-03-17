@@ -24,4 +24,8 @@ public class Restaurant {
     public ArrayList<Menu> getListOfMenu () {
         return this.listOfMenu;
     }
+
+    public void addMenu (Menu menu) {
+        listOfMenu.add(menu);
+    }
 }

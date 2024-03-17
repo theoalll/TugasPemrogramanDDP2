@@ -18,15 +18,15 @@ public class User {
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
-    public String getNama() {
+    public String getName() {
         return this.name;
     }
 
-    public void setNama(String nama) {
+    public void setName(String nama) {
         this.name = nama;
     }
 
-    public String getPhonenumber() {
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 

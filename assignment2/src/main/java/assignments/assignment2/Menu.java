@@ -11,5 +11,12 @@ public class Menu {
         this.priceofFood = harga;
     }
 
+    public String getNameofFood() {
+        return this.nameOfFood;
+    }
+
+    public double getPriceOfFood() {
+        return this.priceofFood;
+    }
     // TODO: tambahkan methods yang diperlukan untuk class ini
 }
