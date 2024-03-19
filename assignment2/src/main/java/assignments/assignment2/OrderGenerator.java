@@ -78,11 +78,11 @@ public class OrderGenerator {
      */
     public static String validateLocation (String location){
         switch(location.toUpperCase()) {
-            case "P": return "Rp 10.000";
-            case "U": return "Rp 20.000";
-            case "T": return "Rp 35.000";
-            case "S": return "Rp 40.000";
-            case "B": return "Rp 60.000";
+            case "P": return "Rp 10000";
+            case "U": return "Rp 20000";
+            case "T": return "Rp 35000";
+            case "S": return "Rp 40000";
+            case "B": return "Rp 60000";
             default: return "0"; // Validasi error
         }
     }
