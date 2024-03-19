@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class Restaurant {
      // TODO: tambahkan attributes yang diperlukan untuk class ini
     private String name;
-    private ArrayList<Menu> listOfMenu = new ArrayList<>();
-
+    private ArrayList<Menu> listOfMenu = new ArrayList<Menu>();
+    public Restaurant(){}
+    
     public Restaurant(String nama){
         // TODO: buat constructor untuk class ini
         this.name = nama;
