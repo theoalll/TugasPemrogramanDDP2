@@ -3,17 +3,14 @@ package assignments.assignment2;
 import java.util.ArrayList;
 
 public class Restaurant {
-     // TODO: tambahkan attributes yang diperlukan untuk class ini
     private String name;
     private ArrayList<Menu> listOfMenu = new ArrayList<Menu>();
     public Restaurant(){}
     
     public Restaurant(String nama){
-        // TODO: buat constructor untuk class ini
         this.name = nama;
     }
     
-    // TODO: tambahkan methods yang diperlukan untuk class ini
     public String getName () {
         return this.name;
     }
@@ -30,3 +27,5 @@ public class Restaurant {
         listOfMenu.add(menu);
     }
 }
+
+// DDP_D_2106165660_TheoAnandalemuel_TP2

@@ -11,11 +11,11 @@ public class Order {
     private boolean orderFinsihed;
 
     public Order(String orderId, String tanggal, int ongkir, Restaurant resto, Menu[] items){
-        // TODO: buat constructor untuk class ini
         this.orderId = orderId;
         this.orderDate = tanggal;
         this.transportFee = ongkir;
         this.restaurant = resto;
+        // Menambahkan menu ke dalam array list
         for (Menu elem: items) {
             this.items.add(elem);
         }
@@ -65,7 +65,6 @@ public class Order {
     public void setStatus (boolean isFinished) {
         this.orderFinsihed = isFinished;
     }
-
-
-    // TODO: tambahkan methods yang diperlukan untuk class ini
 }
+
+// DDP_D_2106165660_TheoAnandalemuel_TP2
