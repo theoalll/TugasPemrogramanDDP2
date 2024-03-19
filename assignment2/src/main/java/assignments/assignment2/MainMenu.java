@@ -319,11 +319,12 @@ public class MainMenu {
                         menuName += foodsInput[j];
                         menuName += " ";
                     }
-                    menuName = menuName.trim();
-                    Menu menu = new Menu(menuName, Double.parseDouble(price));
-                    menuList.add(menu);
                     boolean priceIsValid = OrderGenerator.validatePhoneNumber(price);
+                    // System.out.println(priceIsValid);
                     if (priceIsValid == true) {
+                        menuName = menuName.trim();
+                        Menu menu = new Menu(menuName, Double.parseDouble(price));
+                        menuList.add(menu);
                         restoIsValid = true;
                     }
                     else{
@@ -344,6 +345,7 @@ public class MainMenu {
 
     public static void handleHapusRestoran(){
         // TODO: Implementasi method untuk handle ketika admin ingin tambah restoran
+        System.out.println("--------------Hapus Restoran --------------");
         Restaurant resto = validateRestaurantbyName();
         if (restoList.contains(resto)){
             System.out.println("Restoran berhasil dihapus");
