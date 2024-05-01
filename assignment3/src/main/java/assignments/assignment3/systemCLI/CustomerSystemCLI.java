@@ -183,7 +183,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
                     System.out.println("User belum memiliki metode pembayaran ini!");
                 }
                 else {
-                    System.out.println("\nBerhasil Membayar Bill sebesar Rp " + totalBiaya + "dengan biaya transaksi sebesar Rp " + CreditCardPayment.countTransactionFee(totalBiaya));
+                    System.out.println("\nBerhasil Membayar Bill sebesar Rp " + totalBiaya + " dengan biaya transaksi sebesar Rp " + CreditCardPayment.countTransactionFee(totalBiaya));
                     userLoggedIn.getPayment().processPayment(userLoggedIn, (totalBiaya+CreditCardPayment.countTransactionFee(totalBiaya)));
                 }
                 break;
