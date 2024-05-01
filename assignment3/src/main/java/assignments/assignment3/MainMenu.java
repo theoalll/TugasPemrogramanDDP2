@@ -34,15 +34,22 @@ public class MainMenu {
             startMenu();
             int choice = 0;
             try{
-                choice = input.nextInt();
-                input.nextLine();
+                choice = Integer.parseInt(input.nextLine());
             }
-            catch (java.util.InputMismatchException ime) {
+            catch (NumberFormatException nfe) {
+                System.out.println("Pilihan tidak valid, silakan coba lagi.");
+                run();
             }
             switch (choice) {
                 case 1 -> login();
-                case 2 -> exit = true;
-                default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
+                case 2 -> {
+                    System.out.println("Terima kasih telah menggunakan DepeFood!");
+                    exit = true;
+                }
+                default -> {
+                    System.out.println("Pilihan tidak valid, silakan coba lagi.");
+                    run();
+                }
             }
             input.close();
             return;
@@ -68,6 +75,7 @@ public class MainMenu {
         }
         catch (NullPointerException npe) {
             System.out.println("Masukkan nama dan nomor telepon yang valid!");
+            run();
         }
 
         if (userLoggedIn.role.equals("Admin")) {

@@ -184,13 +184,15 @@ public class CustomerSystemCLI extends UserSystemCLI{
                 }
                 else {
                     System.out.println("\nBerhasil Membayar Bill sebesar Rp " + totalBiaya + " dengan biaya transaksi sebesar Rp " + CreditCardPayment.countTransactionFee(totalBiaya));
-                    userLoggedIn.getPayment().processPayment(userLoggedIn, (totalBiaya+CreditCardPayment.countTransactionFee(totalBiaya)));
+                    userLoggedIn.getPayment().processPayment(userLoggedIn, totalBiaya);
+                    order.setOrderFinished(true);
                 }
                 break;
             }
             case 2 : {
                 if (userLoggedIn.getPayment() instanceof CreditCardPayment) {
                     System.out.println("User belum memiliki metode pembayaran ini!");
+                    order.setOrderFinished(true);
                 }
                 else if (totalBiaya < 50000) {
                     System.out.println("Jumlah pesanan < 50000 mohon menggunakan metode pembayaran yang lain");
@@ -201,9 +203,6 @@ public class CustomerSystemCLI extends UserSystemCLI{
                 }
             }
         }
-        
-
-        
     }
 
     void handleUpdateStatusPesanan(){
