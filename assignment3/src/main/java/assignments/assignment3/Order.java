@@ -1,8 +1,5 @@
 package assignments.assignment3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Order {
     
     private String OrderId;
@@ -12,6 +9,15 @@ public class Order {
     private boolean orderFinished;
     private Menu[] items;
 
+    /**
+     *
+     * @param orderId 
+     * @param tanggal
+     * @param ongkir
+     * @param resto 
+     * @param items menu yang dipesan
+     * Constructor dari class Order yang akan membuat objek dari class Order
+     */
     public Order(String orderId, String tanggal, int ongkir, Restaurant resto, Menu[] items){
         this.OrderId = orderId;
         this.tanggal = tanggal;
@@ -20,6 +26,8 @@ public class Order {
         this.orderFinished = false;
         this.items = items;
     }
+
+    // Setters and Getters
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -41,6 +49,12 @@ public class Order {
     public Menu[] getItems() {
         return items;
     }
+
+    /**
+     *
+     * @return array of Menu yang telah diurutkan berdasarkan harga
+     * Method ini akan mengurutkan menu yang dipesan berdasarkan harga dari yang termurah hingga termahal
+     */
     public Menu[] getSortedMenu(){
         Menu[] menuArr = new Menu[getItems().length];
         for(int i=0; i < getItems().length;i++){
@@ -59,6 +73,12 @@ public class Order {
         }
         return menuArr;
     }
+
+    /**
+     *
+     * @return total harga dari seluruh menu yang dipesan
+     * Method ini akan menghitung total harga dari seluruh menu yang dipesan ditambah dengan ongkir
+     */
     public double getTotalHarga(){
         double sum = 0;
         for(Menu menu: getItems()){
@@ -67,3 +87,4 @@ public class Order {
         return sum += getOngkir();
     }
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3

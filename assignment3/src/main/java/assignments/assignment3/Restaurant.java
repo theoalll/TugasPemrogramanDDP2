@@ -6,15 +6,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Restaurant {
-    private String nama;
-    private ArrayList<Menu> menu;
+    private final String nama;
+    private final ArrayList<Menu> menu;
     private long saldo;
 
+    /**
+     *
+     * @param nama nama dari restaurant
+     * Constructor dari class Restaurant yang akan membuat objek dari class Restaurant
+     */
     public Restaurant(String nama){
         this.nama = nama;
         this.menu = new ArrayList<>();
     }
     
+    // Setters and Getters
     public String getNama() {
         return nama;
     }
@@ -28,6 +34,10 @@ public class Restaurant {
         return saldo;
     }
 
+    /**
+     * Mengurutkan menu dalam restoran berdasarkan harga dari yang terendah ke tertinggi.
+     * @return ArrayList<Menu> yang berisi menu yang sudah diurutkan.
+     */
     private ArrayList<Menu> sortMenu(){
         Menu[] menuArr = new Menu[menu.size()];
         for(int i=0; i < menu.size();i++){
@@ -46,6 +56,12 @@ public class Restaurant {
         }
         return new ArrayList<>(Arrays.asList(menuArr));
     }
+
+    /**
+     *
+     * @return String yang berisi menu yang sudah diurutkan
+     * Method ini akan mengembalikan String menu yang sudah diurutkan berdasarkan harga dari yang terendah ke tertinggi
+     */
     public String printMenu() {
         StringBuilder menuString = new StringBuilder("Menu:\n");
         DecimalFormat decimalFormat = new DecimalFormat();
@@ -63,3 +79,4 @@ public class Restaurant {
         return menuString.toString();
     }
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3

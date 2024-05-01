@@ -14,10 +14,16 @@ public abstract class UserSystemCLI{
     ArrayList<User> userList = MainMenu.userList;
     protected Scanner input = new Scanner(System.in);
 
+    /**
+     * Constructor dari class UserSystemCLI yang akan membuat objek dari class Scanner untuk input
+     */
     public UserSystemCLI() {
         input = new Scanner(System.in);
     }
     
+    /**
+     * Method ini akan menampilkan menu yang dapat dipilih oleh user dan meminta input dari user untuk memilih menu
+     */
     public void run() {
         boolean isLoggedIn = true;
         try{
@@ -27,14 +33,24 @@ public abstract class UserSystemCLI{
                 isLoggedIn = handleMenu(command);
             }
         }
+        // Melakukan validasi jika input yang dimasukkan bukan angka
         catch (NumberFormatException nfe) {
             System.out.println("Pilihan tidak valid, silakan coba lagi.");
             run();
         }
     }
+
+    // Method abstract yang akan diimplementasikan oleh subclass
     abstract void displayMenu();
     abstract boolean handleMenu(int command);
 
+    /**
+     *
+     * @return objek Restaurant yang telah terdaftar pada sistem
+     * Method ini akan meminta input dari user berupa nama restoran dan melakukan validasi apakah restoran tersebut terdaftar pada sistem
+     * Jika restoran tidak terdaftar, maka method akan meminta input kembali
+     * Jika restoran terdaftar, maka method akan mengembalikan objek Restaurant yang telah terdaftar
+     */
     public Restaurant validateRestaurantbyName(){
         boolean restoIsRegistered = false;
         int indexOfRestoList = 0;
@@ -56,6 +72,12 @@ public abstract class UserSystemCLI{
         return restoList.get(indexOfRestoList);
     }
 
+    /**
+     *
+     * @param orderDate tanggal yang akan divalidasi
+     * @return boolean yang menunjukkan apakah tanggal yang dimasukkan valid atau tidak
+     * Method ini akan melakukan validasi apakah tanggal yang dimasukkan sesuai dengan format yang diinginkan (dd/mm/yyyy)
+     */
     public static boolean validateDate(String orderDate) {
         if (orderDate.length() == 10);
         else return false;
@@ -73,6 +95,12 @@ public abstract class UserSystemCLI{
         return true;
     }
 
+    /**
+     *
+     * @param loop variabel yang menunjukkan apakah method ini akan melakukan looping input atau tidak
+     * @return objek Order yang telah terdaftar pada sistem
+     * Method ini akan meminta input dari user berupa Order ID dan melakukan validasi apakah Order ID tersebut terdaftar pada sistem
+     */
     public Order validateOrderbyOrderId(int loop) {
         int isLooping = loop;
         boolean orderIsRegistered = false;
@@ -119,3 +147,4 @@ public abstract class UserSystemCLI{
         return null;
     }
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3

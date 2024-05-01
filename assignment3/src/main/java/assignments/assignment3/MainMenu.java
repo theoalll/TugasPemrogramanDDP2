@@ -7,7 +7,6 @@ import assignments.assignment3.payment.CreditCardPayment;
 import assignments.assignment3.payment.DebitPayment;
 import assignments.assignment3.systemCLI.AdminSystemCLI;
 import assignments.assignment3.systemCLI.CustomerSystemCLI;
-import assignments.assignment3.systemCLI.UserSystemCLI;
 
 public class MainMenu {
     private final Scanner input;
@@ -16,30 +15,47 @@ public class MainMenu {
     public static User userLoggedIn;
     public static ArrayList<User> userList = new ArrayList<>();
 
+    /**
+     *
+     * @param in Scanner yang digunakan untuk input
+     * @param loginManager untuk mengelola login user dan sistem
+     * Constructor dari class MainMenu yang akan membuat objek dari class Scanner untuk input dan objek dari class LoginManager
+     */
     public MainMenu(Scanner in, LoginManager loginManager) {
         this.input = in;
         this.loginManager = loginManager;
     }
 
+    /**
+     *
+     * @param args
+     * Method main yang akan membuat objek dari class MainMenu dan menjalankan method run 
+     */
     public static void main(String[] args) {
         initUser();
         MainMenu mainMenu = new MainMenu(new Scanner(System.in), new LoginManager(new AdminSystemCLI(), new CustomerSystemCLI()));
         mainMenu.run();
     }
 
+    /**
+     * Method run yang akan menampilkan header dan menu awal dari program dan meminta input dari user untuk memilih menu
+     */
     public void run(){
         printHeader();
         boolean exit = false;
         while (!exit) {
+            // Task 1: Implementasi menu awal
             startMenu();
             int choice = 0;
             try{
                 choice = Integer.parseInt(input.nextLine());
             }
+            // Task 2: Validasi jika input yang dimasukkan bukan angka
             catch (NumberFormatException nfe) {
                 System.out.println("Pilihan tidak valid, silakan coba lagi.");
                 run();
             }
+            // Task 3: Implementasi pilihan menu
             switch (choice) {
                 case 1 -> login();
                 case 2 -> {
@@ -52,20 +68,23 @@ public class MainMenu {
                     run();
                 }
             }
-            input.close();
             return;
         }
     }
 
+    /**
+     * Method login yang akan meminta input nama dan nomor telepon dari user dan melakukan validasi login
+     */
     public void login(){
         userLoggedIn = null;
+        // Task 1: Minta input nama dan nomor telepon
         System.out.println("\nSilakan Login:");
         System.out.print("Nama: ");
         String nama = input.nextLine();
         System.out.print("Nomor Telepon: ");
         String noTelp = input.nextLine();
         
-        // TODO: Validasi input login
+        // Task 2: Validasi login user
         for (User elem: userList) {
             if (elem.getNomorTelepon().equals(noTelp) && elem.getNama().equals(nama)){
                 userLoggedIn = elem;
@@ -111,9 +130,7 @@ public class MainMenu {
     }
 
     public static void initUser(){
-        userList = new ArrayList<User>();
-
-        //TODO: Adjust constructor dan atribut pada class User di Assignment 2
+        userList = new ArrayList<>();
         userList.add(new User("Thomas N", "9928765403", "thomas.n@gmail.com", "P", "Customer", new DebitPayment(), 500000));
         userList.add(new User("Sekar Andita", "089877658190", "dita.sekar@gmail.com", "B", "Customer", new CreditCardPayment(), 2000000));
         userList.add(new User("Sofita Yasusa", "084789607222", "sofita.susa@gmail.com", "T", "Customer", new DebitPayment(), 750000));
@@ -125,3 +142,4 @@ public class MainMenu {
     }
 
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3

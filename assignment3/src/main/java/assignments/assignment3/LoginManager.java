@@ -13,6 +13,12 @@ public class LoginManager {
         this.customerSystem = customerSystem;
     }
 
+    /**
+     *
+     * @param role merupakan peran dari user yang login
+     * @return objek UserSystemCLI yang sesuai dengan peran user
+     * Method ini akan mengembalikan objek UserSystemCLI yang sesuai dengan peran user
+     */
     public UserSystemCLI getSystem(String role){
         if(role.equals("Customer")){
             return adminSystem;
@@ -21,3 +27,4 @@ public class LoginManager {
         }
     }
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3

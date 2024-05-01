@@ -8,8 +8,16 @@ import assignments.assignment3.payment.CreditCardPayment;
 import assignments.assignment3.payment.DebitPayment;
 
 public class CustomerSystemCLI extends UserSystemCLI{
-
-    //TODO: Tambahkan modifier dan buatlah metode ini mengoverride dari Abstract class
+    
+    
+    /**
+     * Menghandle pilihan menu user dan melakukan tindakan yang sesuai.
+     * 
+     * @param choice pilihan menu pengguna
+     * @return true jika pilihan menu valid dan tindakan berhasil dilakukan, false jika sebaliknya
+     */
+    
+    @Override
     boolean handleMenu(int choice){
         switch(choice){
             case 1 -> handleBuatPesanan();
@@ -25,7 +33,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
         return true;
     }
 
-    //TODO: Tambahkan modifier dan buatlah metode ini mengoverride dari Abstract class
+    @Override
     void displayMenu() {
         System.out.println("\n--------------------------------------------");
         System.out.println("Pilih menu:");
@@ -39,18 +47,25 @@ public class CustomerSystemCLI extends UserSystemCLI{
         System.out.print("Pilihan menu: ");
     }
 
+    /**
+     * Menghandle proses pembuatan pesanan.
+     * 
+     * Method ini meminta input dari pengguna untuk membuat pesanan, memvalidasi restoran, tanggal pemesanan, jumlah pesanan, dan menu yang dipesan.
+     * Setelah semua input valid, method ini akan membuat objek Order dan menyimpannya ke dalam orderList pengguna yang sedang login.
+     */
     void handleBuatPesanan(){
         boolean orderIsValid = false;
         Restaurant resto = null;
         String orderDate = "";
         String orderId = "";
         Menu[] listOfMenu = new Menu[0];
+
         while (orderIsValid == false) {
             System.out.println("--------------Buat Pesanan--------------");
-            // Mengambil input nama restoran dan mengambil object Restaurant
+            // Task #1: Mengambil input nama restoran dan mengambil object Restaurant
             resto = validateRestaurantbyName();
 
-            // Validasi tanggal pemesanan
+            // Task #2: Validasi tanggal pemesanan
             System.out.print("Tanggal Pemesanan: ");
             orderDate = input.nextLine();
             if (validateDate(orderDate) == false) {
@@ -58,10 +73,10 @@ public class CustomerSystemCLI extends UserSystemCLI{
                 continue;
             }        
             
-            // Validasi jumlah pesanan
+            // Task #3: Validasi jumlah pesanan
             System.out.print("Jumlah Pesanan: ");
             String orderQty = input.nextLine();
-            // Membuat orderID
+            // Task #4: Membuat orderID
             try{
                 orderId = OrderGenerator.generateOrderID(resto.getNama(), orderDate, userLoggedIn.getNomorTelepon());
             }
@@ -69,10 +84,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
                 System.out.println("Harap masukkan jumlah pesanan dalam bentuk bilangan bulat positif!");
                 continue;
             }
-
-
-
-            // Menerima dan validasi menu yang dipesan
+            // Task #5: Menerima dan validasi menu yang dipesan
             listOfMenu = new Menu[Integer.parseInt(orderQty)];
             System.out.println("Order: ");
             for (int i = 0; i < Integer.parseInt(orderQty); i++) {
@@ -95,18 +107,22 @@ public class CustomerSystemCLI extends UserSystemCLI{
                 }
             }
         }
-        // Membuat object Order dan menyimpannya ke dalam orderList
+        // Task #6: Membuat object Order dan menyimpannya ke dalam orderList
         Order order = new Order (orderId, orderDate, OrderGenerator.TransportFeeDecider(userLoggedIn.getLokasi()), resto, listOfMenu);
         System.out.printf("Pesanan dengan ID %s diterima!", orderId);
         userLoggedIn.addOrderHistory(order);
     }
 
+    /**
+     * 
+     *  Menghandle proses pencetakan bill pesanan dengan ID tertentu.
+    */
     void handleCetakBill(){
         System.out.println("--------------Cetak Bill--------------");
-        // Menerima dan mengambil object Order berdasarkan orderID
+        // Task #1: Menerima dan mengambil object Order berdasarkan orderID
         Order order = validateOrderbyOrderId(1);
 
-        // Mencetak bill
+        // Task #2: Mencetak bill dengan format yang sesuai
         System.out.println("\nBill:");        
         System.out.printf("Order ID: %s\n", order.getOrderId());
         System.out.printf("Tanggal pemesanan: %s\n", order.getTanggal());
@@ -120,7 +136,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
         System.out.printf("Status pengiriman: %s\n", status);
         int totalBiaya = 0;
         System.out.println("Pesanan:");
-        // Menghitung total biaya pesanan
+        // Task #3: Menghitung total biaya pesanan
         for (Menu elem: order.getItems()){
             System.out.printf("- %s %.0f\n", elem.getNamaMakanan(), elem.getHarga());
             totalBiaya += elem.getHarga();
@@ -130,6 +146,9 @@ public class CustomerSystemCLI extends UserSystemCLI{
         
     }
 
+    /**
+     * Menghandle proses melihat menu dari restoran yang dipilih.
+    */
     void handleLihatMenu(){
         System.out.println("--------------Lihat Menu--------------");
         // Mengambil object Restaurant berdasarkan nama restoran
@@ -137,11 +156,15 @@ public class CustomerSystemCLI extends UserSystemCLI{
         System.out.println(resto.printMenu());
     }
 
+    /**
+     * Menghandle pembayaran tagihan pesanan.
+     * Method ini digunakan untuk menghandle ketika pelanggan ingin membayar tagihan pesanan.
+     */
     void handleBayarBill(){
-        // TODO: Implementasi method untuk handle ketika customer ingin melihat menu
         System.out.println("--------------Bayar Bill--------------");
-        // Menerima dan mengambil object Order berdasarkan orderID
+        // Task #1: Menerima dan mengambil object Order berdasarkan orderID
         Order order = validateOrderbyOrderId(0);
+        // Task #2: Melakukan validasi apakah pesanan sudah dibayar atau belum
         if (order == null) 
             return;
         else if (order.getOrderFinished() == true) {
@@ -149,7 +172,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
             return;
         }
 
-        // Mencetak bill
+        // Task #3: Mencetak bill
         System.out.println("\nBill:");        
         System.out.printf("Order ID: %s\n", order.getOrderId());
         System.out.printf("Tanggal pemesanan: %s\n", order.getTanggal());
@@ -171,14 +194,15 @@ public class CustomerSystemCLI extends UserSystemCLI{
         totalBiaya+=order.getOngkir();
         System.out.printf("Biaya Ongkos Kirim: %s\n", OrderGenerator.validateLocation(userLoggedIn.getLokasi()));
         System.out.printf("Total Biaya: Rp %d\n", totalBiaya);
-
+        // Task #4: Memilih metode pembayaran
         System.out.println("\nOpsi Pembayaran:");
         System.out.println("1. Credit Card");
         System.out.println("2. Debit");
         System.out.print("Pilihan Metode Pembayaran: ");
         int choice = Integer.parseInt(input.nextLine());
+        // Task #5: Melakukan pembayaran sesuai metode yang dipilih dan mengupdate status pesanan jika pembayaran berhasil dilakukan 
         switch (choice) {
-            case 1 : {
+            case 1 ->  {
                 if (userLoggedIn.getPayment() instanceof DebitPayment) {
                     System.out.println("User belum memiliki metode pembayaran ini!");
                 }
@@ -187,9 +211,8 @@ public class CustomerSystemCLI extends UserSystemCLI{
                     userLoggedIn.getPayment().processPayment(userLoggedIn, totalBiaya);
                     order.setOrderFinished(true);
                 }
-                break;
             }
-            case 2 : {
+            case 2 -> {
                 if (userLoggedIn.getPayment() instanceof CreditCardPayment) {
                     System.out.println("User belum memiliki metode pembayaran ini!");
                     order.setOrderFinished(true);
@@ -205,6 +228,13 @@ public class CustomerSystemCLI extends UserSystemCLI{
         }
     }
 
+    /**
+     * Menghandle proses update status pesanan.
+     * 
+     * Method ini akan mengubah status pesanan menjadi selesai jika status pesanan belum selesai.
+     * Jika status pesanan sudah selesai, maka akan mencetak pesan bahwa status pesanan tidak berhasil diupdate.
+     * Jika status pesanan belum selesai, maka akan mencetak pesan bahwa status pesanan berhasil diupdate dan mengubah status pesanan menjadi selesai.
+     */
     void handleUpdateStatusPesanan(){
         System.out.println("--------------Update Status Pesanan--------------");
         // Mengambil object Order berdasarkan orderID
@@ -221,7 +251,11 @@ public class CustomerSystemCLI extends UserSystemCLI{
 
     }
 
+    /**
+    * Menghandle permintaan untuk memeriksa saldo pengguna yang sedang login.
+    */
     void handleCekSaldo(){
         System.out.println("Sisa saldo sebesar Rp " + userLoggedIn.getSaldo());
     }
 }
+// DDP_D_2106165660_TheoAnandalemuel_TP3
