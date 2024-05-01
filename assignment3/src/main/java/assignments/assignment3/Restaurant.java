@@ -1,4 +1,4 @@
-package assignments.assignment2;
+package assignments.assignment3;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -8,6 +8,8 @@ import java.util.Arrays;
 public class Restaurant {
     private String nama;
     private ArrayList<Menu> menu;
+    private long saldo;
+
     public Restaurant(String nama){
         this.nama = nama;
         this.menu = new ArrayList<>();
@@ -21,6 +23,9 @@ public class Restaurant {
     }
     public ArrayList<Menu> getMenu() {
         return menu;
+    }
+    public long getSaldo(){
+        return saldo;
     }
 
     private ArrayList<Menu> sortMenu(){

@@ -1,7 +1,10 @@
 package assignments.assignment3.payment;
+import assignments.assignment3.User;
 
 public interface DepeFoodPaymentSystem {
-    //TODO implementasikan interface di sini
-    // Atribut harap mengikuti dokumen soal
-    // Anda dibebaskan untuk membuat method yang diperlukan
+    // public static long saldo = 0;
+
+    public abstract long processPayment(User user, long amount);
+
+
 }

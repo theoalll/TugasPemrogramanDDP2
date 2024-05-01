@@ -1,6 +1,8 @@
-package assignments.assignment2;
+package assignments.assignment3;
 
 import java.util.ArrayList;
+
+import assignments.assignment3.payment.DepeFoodPaymentSystem;
 
 public class User {
     
@@ -9,15 +11,20 @@ public class User {
     private String email;
     private ArrayList<Order> orderHistory;
     public String role;
-
     private String lokasi;
-    public User(String nama, String nomorTelepon, String email, String lokasi, String role){
+    private long saldo;
+    private DepeFoodPaymentSystem payment;
+
+
+    public User(String nama, String nomorTelepon, String email, String lokasi, String role, DepeFoodPaymentSystem payment, long saldo){
         this.nama = nama;
         this.nomorTelepon = nomorTelepon;
         this.email = email;
         this.lokasi = lokasi;
         this.role = role;
         orderHistory = new ArrayList<>();
+        this.payment = payment;
+        this.saldo = saldo;
     }
     public String getEmail() {
         return email;
@@ -36,6 +43,15 @@ public class User {
     }
     public ArrayList<Order> getOrderHistory() {
         return orderHistory;
+    }
+    public long getSaldo() {
+        return saldo;
+    }
+    public void setSaldo(long newSaldo){
+        this.saldo = newSaldo;
+    }
+    public DepeFoodPaymentSystem getPayment() {
+        return payment;
     }
     public boolean isOrderBelongsToUser(String orderId) {
         for (Order order : orderHistory) {

@@ -3,19 +3,18 @@ package assignments.assignment3;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import assignments.assignment2.Restaurant;
-import assignments.assignment2.User;
-import assignments.assignment3.LoginManager
 import assignments.assignment3.payment.CreditCardPayment;
 import assignments.assignment3.payment.DebitPayment;
 import assignments.assignment3.systemCLI.AdminSystemCLI;
 import assignments.assignment3.systemCLI.CustomerSystemCLI;
+import assignments.assignment3.systemCLI.UserSystemCLI;
 
 public class MainMenu {
     private final Scanner input;
     private final LoginManager loginManager;
-    private static ArrayList<Restaurant> restoList;
-    private static ArrayList<User> userList;
+    public static ArrayList<Restaurant> restoList = new ArrayList<>();
+    public static User userLoggedIn;
+    public static ArrayList<User> userList = new ArrayList<>();
 
     public MainMenu(Scanner in, LoginManager loginManager) {
         this.input = in;
@@ -23,6 +22,7 @@ public class MainMenu {
     }
 
     public static void main(String[] args) {
+        initUser();
         MainMenu mainMenu = new MainMenu(new Scanner(System.in), new LoginManager(new AdminSystemCLI(), new CustomerSystemCLI()));
         mainMenu.run();
     }
@@ -32,30 +32,52 @@ public class MainMenu {
         boolean exit = false;
         while (!exit) {
             startMenu();
-            int choice = input.nextInt();
-            input.nextLine();
+            int choice = 0;
+            try{
+                choice = input.nextInt();
+                input.nextLine();
+            }
+            catch (java.util.InputMismatchException ime) {
+            }
             switch (choice) {
                 case 1 -> login();
                 case 2 -> exit = true;
                 default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
             }
+            input.close();
+            return;
         }
-
-        input.close();
     }
 
-    private void login(){
+    public void login(){
         System.out.println("\nSilakan Login:");
         System.out.print("Nama: ");
         String nama = input.nextLine();
         System.out.print("Nomor Telepon: ");
         String noTelp = input.nextLine();
-
+        
         // TODO: Validasi input login
+        for (User elem: userList) {
+            if (elem.getNomorTelepon().equals(noTelp) && elem.getNama().equals(nama)){
+                userLoggedIn = elem;
+            }
+        }
+        try {
+            loginManager.getSystem(userLoggedIn.role);
+            System.out.println("Selamat datang "+userLoggedIn.getNama());
+        }
+        catch (NullPointerException npe) {
+            System.out.println("Masukkan nama dan nomor telepon yang valid!");
+        }
 
-        User userLoggedIn; // TODO: lengkapi
-
-        loginManager.getSystem(userLoggedIn.role);
+        if (userLoggedIn.role.equals("Admin")) {
+            new AdminSystemCLI().run();
+            run();
+        }
+        else{
+            new CustomerSystemCLI().run();
+            run();
+        }
     }
 
     private static void printHeader(){
@@ -91,4 +113,5 @@ public class MainMenu {
         userList.add(new User("Admin", "123456789", "admin@gmail.com", "-", "Admin", new CreditCardPayment(), 0));
         userList.add(new User("Admin Baik", "9123912308", "admin.b@gmail.com", "-", "Admin", new CreditCardPayment(), 0));
     }
+
 }
