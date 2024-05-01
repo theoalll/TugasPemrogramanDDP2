@@ -11,7 +11,7 @@ public class CreditCardPayment implements  DepeFoodPaymentSystem {
         return user.getSaldo()-countTransactionFee(amount);
     }
 
-    public long countTransactionFee(long amount) {
+    public static long countTransactionFee(long amount) {
         return (long)(amount*TRANSACTION_FEE_PERCENTAGE);
     }
 }

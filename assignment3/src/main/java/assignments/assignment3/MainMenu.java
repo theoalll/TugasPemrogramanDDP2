@@ -64,7 +64,7 @@ public class MainMenu {
         }
         try {
             loginManager.getSystem(userLoggedIn.role);
-            System.out.println("Selamat datang "+userLoggedIn.getNama());
+            System.out.println("Selamat datang "+userLoggedIn.getNama() +"!");
         }
         catch (NullPointerException npe) {
             System.out.println("Masukkan nama dan nomor telepon yang valid!");

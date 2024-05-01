@@ -139,7 +139,7 @@ public class CustomerSystemCLI extends UserSystemCLI{
 
     void handleBayarBill(){
         // TODO: Implementasi method untuk handle ketika customer ingin melihat menu
-        System.out.println("--------------Cetak Bill--------------");
+        System.out.println("--------------Bayar Bill--------------");
         // Menerima dan mengambil object Order berdasarkan orderID
         Order order = validateOrderbyOrderId(0);
         if (order == null) 
@@ -168,10 +168,11 @@ public class CustomerSystemCLI extends UserSystemCLI{
             System.out.printf("- %s %.0f\n", elem.getNamaMakanan(), elem.getHarga());
             totalBiaya += elem.getHarga();
         }
+        totalBiaya+=order.getOngkir();
         System.out.printf("Biaya Ongkos Kirim: %s\n", OrderGenerator.validateLocation(userLoggedIn.getLokasi()));
-        System.out.printf("Total Biaya: Rp %d\n", totalBiaya+order.getOngkir());
+        System.out.printf("Total Biaya: Rp %d\n", totalBiaya);
 
-        System.out.println("Opsi Pembayaran:");
+        System.out.println("\nOpsi Pembayaran:");
         System.out.println("1. Credit Card");
         System.out.println("2. Debit");
         System.out.print("Pilihan Metode Pembayaran: ");
@@ -180,17 +181,16 @@ public class CustomerSystemCLI extends UserSystemCLI{
             case 1 : {
                 if (userLoggedIn.getPayment() instanceof DebitPayment) {
                     System.out.println("User belum memiliki metode pembayaran ini!");
-                    return;
                 }
                 else {
-                    System.out.println("\nBerhasil Membayar Bill sebesar Rp " + totalBiaya);
-                    userLoggedIn.getPayment().processPayment(userLoggedIn, totalBiaya);
+                    System.out.println("\nBerhasil Membayar Bill sebesar Rp " + totalBiaya + "dengan biaya transaksi sebesar Rp " + CreditCardPayment.countTransactionFee(totalBiaya));
+                    userLoggedIn.getPayment().processPayment(userLoggedIn, (totalBiaya+CreditCardPayment.countTransactionFee(totalBiaya)));
                 }
+                break;
             }
             case 2 : {
                 if (userLoggedIn.getPayment() instanceof CreditCardPayment) {
                     System.out.println("User belum memiliki metode pembayaran ini!");
-                    return;
                 }
                 else if (totalBiaya < 50000) {
                     System.out.println("Jumlah pesanan < 50000 mohon menggunakan metode pembayaran yang lain");
