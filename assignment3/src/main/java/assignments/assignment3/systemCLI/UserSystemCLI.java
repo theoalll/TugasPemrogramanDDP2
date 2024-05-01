@@ -20,11 +20,16 @@ public abstract class UserSystemCLI{
     
     public void run() {
         boolean isLoggedIn = true;
-        while (isLoggedIn) {
-            displayMenu();
-            int command = input.nextInt();
-            input.nextLine();
-            isLoggedIn = handleMenu(command);
+        try{
+            while (isLoggedIn) {
+                displayMenu();
+                int command = Integer.parseInt(input.nextLine());
+                isLoggedIn = handleMenu(command);
+            }
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("Pilihan tidak valid, silakan coba lagi.");
+            run();
         }
     }
     abstract void displayMenu();
@@ -69,7 +74,7 @@ public abstract class UserSystemCLI{
     }
 
     public Order validateOrderbyOrderId(int loop) {
-        Order order;
+        int isLooping = loop;
         boolean orderIsRegistered = false;
         User userBelongsTo = null;
 
@@ -85,8 +90,8 @@ public abstract class UserSystemCLI{
         }
         
         // Jika orderID tidak terdaftar, maka method akan meminta input kembali
-        if (orderIsRegistered == false){
-            if (loop == 1){
+        while (orderIsRegistered == false){
+            if (isLooping == 1){
                 System.err.println("Order ID tidak dapat ditemukan");
                 System.out.print("Masukkan Order ID: ");
                 orderId = input.nextLine();

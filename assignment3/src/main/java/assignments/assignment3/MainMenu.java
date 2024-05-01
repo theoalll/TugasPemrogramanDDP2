@@ -45,6 +45,7 @@ public class MainMenu {
                 case 2 -> {
                     System.out.println("Terima kasih telah menggunakan DepeFood!");
                     exit = true;
+                    return;
                 }
                 default -> {
                     System.out.println("Pilihan tidak valid, silakan coba lagi.");
@@ -57,6 +58,7 @@ public class MainMenu {
     }
 
     public void login(){
+        userLoggedIn = null;
         System.out.println("\nSilakan Login:");
         System.out.print("Nama: ");
         String nama = input.nextLine();
@@ -72,20 +74,20 @@ public class MainMenu {
         try {
             loginManager.getSystem(userLoggedIn.role);
             System.out.println("Selamat datang "+userLoggedIn.getNama() +"!");
+            if (userLoggedIn.role.equals("Admin")) {
+                new AdminSystemCLI().run();
+                run();
+            }
+            else{
+                new CustomerSystemCLI().run();
+                run();
+            }
         }
         catch (NullPointerException npe) {
             System.out.println("Masukkan nama dan nomor telepon yang valid!");
             run();
         }
 
-        if (userLoggedIn.role.equals("Admin")) {
-            new AdminSystemCLI().run();
-            run();
-        }
-        else{
-            new CustomerSystemCLI().run();
-            run();
-        }
     }
 
     private static void printHeader(){
