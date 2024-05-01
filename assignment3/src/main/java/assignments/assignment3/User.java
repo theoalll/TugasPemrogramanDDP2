@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import assignments.assignment3.payment.DepeFoodPaymentSystem;
 
 public class User {
-    private String nama;
-    private String nomorTelepon;
-    private String email;
-    private ArrayList<Order> orderHistory;
-    public String role;
-    private String lokasi;
+    private final String nama;
+    private final String nomorTelepon;
+    private final String email;
+    private final ArrayList<Order> orderHistory;
+    public final String role;
+    private final String lokasi;
     private long saldo;
-    private DepeFoodPaymentSystem payment;
+    private final DepeFoodPaymentSystem payment;
 
     /**
      *
