@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="408.0" fitWidth="608.0">
+         <image>
+            <Image url="@FOOD_IMAGE.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="408.0" fitWidth="608.0">
+         <image>
+            <Image url="@BLUE_RED_TRANSPARENT.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="325.0" layoutX="45.0" layoutY="38.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="511.0" />
+      <Text layoutX="92.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lihat Menu">
+         <font>
+            <Font name="Segoe UI Bold" size="34.0" />
+         </font>
+      </Text>
+      <Text layoutX="92.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Isi data berikut dengan sesuai">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="442.0" layoutY="68.0">
+         <image>
+            <Image url="@LOGO_TRANSPARENT.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="96.0" layoutY="177.0" prefHeight="26.0" prefWidth="154.0" promptText="Masukkan Nama Restoran" />
+      <Text layoutX="96.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Restoran">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Text>
+      <Button alignment="CENTER" layoutX="92.0" layoutY="222.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="107.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Submit!" />
+      <Button layoutX="92.0" layoutY="267.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="Kembali" />
+      <Text layoutX="292.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daftar Menu:">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Text>
+      <ScrollPane layoutX="292.0" layoutY="179.0" prefHeight="152.0" prefWidth="235.0">
+         <content>
+            <VBox prefHeight="372.0" prefWidth="235.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
