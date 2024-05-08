@@ -159,7 +159,7 @@ public class OrderGenerator {
      *    4. Jika user memilih selain 1, 2, atau 3, maka program akan dimulai ulang
      *    5. Jika input tidak valid, maka program akan meminta input ulang sebelum melanjutkan ke langkah selanjutnya
      */
-    public static void orderGenerator () {
+    public static void orderGenerator() {
         showMenu();
         System.out.print("Pilihan menu: ");
         int choice = input.nextInt();
@@ -195,9 +195,9 @@ public class OrderGenerator {
                 String orderId = input.nextLine();
                 while (validateOrderId(orderId) == 11 || validateOrderId(orderId) == 22) {
                     if (validateOrderId(orderId) == 11){
-                    System.out.println("Order ID minimal 16 karakter!");
-                    System.out.print("Order ID: ");
-                    orderId = input.nextLine();
+                        System.out.println("Order ID minimal 16 karakter!");
+                        System.out.print("Order ID: ");
+                        orderId = input.nextLine();
                     }
                     else {
                         System.out.println("Silahkan masukkan Order ID yang valid!");

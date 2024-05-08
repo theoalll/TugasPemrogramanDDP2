@@ -351,37 +351,37 @@ public class MainMenu {
                 }
             }
             // Mengambil dan melakukan validasi input jumlah makanan dan menu yang ditawarkan
-                System.out.print("Jumlah Makanan: ");
-                int numOfFood = Integer.parseInt(input.nextLine());
-                
-                for (int i = 0; i < numOfFood; i++) {
-                    String foods = input.nextLine().trim();
-                    String[] foodsInput = foods.split("\\s+");
-                    price = foodsInput[foodsInput.length-1];
-                    menuName = "";
-                    for (int j = 0; j < foodsInput.length-1; j++) {
-                        menuName += foodsInput[j];
-                        menuName += " ";
-                    }
-                    // Validasi harga menu (apakah harga menu merupakan bilangan bulat positif atau tidak)
-                    if (OrderGenerator.validatePhoneNumber(price) == false)
+            System.out.print("Jumlah Makanan: ");
+            int numOfFood = Integer.parseInt(input.nextLine());
+            
+            for (int i = 0; i < numOfFood; i++) {
+                String foods = input.nextLine().trim();
+                String[] foodsInput = foods.split("\\s+");
+                price = foodsInput[foodsInput.length-1];
+                menuName = "";
+                for (int j = 0; j < foodsInput.length-1; j++) {
+                    menuName += foodsInput[j];
+                    menuName += " ";
+                }
+                // Validasi harga menu (apakah harga menu merupakan bilangan bulat positif atau tidak)
+                if (OrderGenerator.validatePhoneNumber(price) == false)
                     priceIsValid = false;
-                    else {
-                        menuName = menuName.trim();
-                        Menu menu = new Menu(menuName, Double.parseDouble(price));
-                        menuList.add(menu);
-                    }
-                }
-                if (priceIsValid == true) {
-                    restoIsValid = true;
-                }
-                else{
-                    System.out.println("Harga menu harus bilangan bulat!\n");
-                    restoIsValid = false;
-                    // Jika order tidak valid, menu yang sudah disimpan akan dihapus (minta dari awal)
-                    menuList = new ArrayList<Menu>();
+                else {
+                    menuName = menuName.trim();
+                    Menu menu = new Menu(menuName, Double.parseDouble(price));
+                    menuList.add(menu);
                 }
             }
+            if (priceIsValid == true) {
+                restoIsValid = true;
+            }
+            else{
+                System.out.println("Harga menu harus bilangan bulat!\n");
+                restoIsValid = false;
+                // Jika order tidak valid, menu yang sudah disimpan akan dihapus (minta dari awal)
+                menuList = new ArrayList<Menu>();
+            }
+        }
         // Membuat object Restaurant dan menambah restoran ke dalam sistem
         Restaurant resto = new Restaurant(restoName);
         restoList.add(resto);

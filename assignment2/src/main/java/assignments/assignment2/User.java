@@ -8,7 +8,7 @@ public class User {
     private String role;
 
     public User(String nama, String nomorTelepon, String email, String lokasi, String role){
-        this. name = nama;
+        this.name = nama;
         this.phoneNumber = nomorTelepon;
         this.email = email;
         this.location = lokasi;
