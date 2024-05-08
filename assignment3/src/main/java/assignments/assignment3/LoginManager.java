@@ -13,6 +13,7 @@ public class LoginManager {
         this.customerSystem = customerSystem;
     }
 
+<<<<<<< HEAD
     /**
      *
      * @param role merupakan peran dari user yang login
@@ -23,8 +24,18 @@ public class LoginManager {
         if(role.equals("Customer")){
             return adminSystem;
         }else{
+=======
+    public UserSystemCLI getSystem(String role) {
+        if (role.equals("Customer")) {
+>>>>>>> 2de87934941926ea08452f88727b4221a5edf9d5
             return customerSystem;
         }
+
+        return adminSystem;
     }
+<<<<<<< HEAD
 }
 // DDP_D_2106165660_TheoAnandalemuel_TP3
+=======
+}
+>>>>>>> 2de87934941926ea08452f88727b4221a5edf9d5
