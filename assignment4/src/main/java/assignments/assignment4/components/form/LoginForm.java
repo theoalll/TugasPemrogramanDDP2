@@ -43,6 +43,7 @@ public class LoginForm {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login_page.fxml"));
         scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setScene(scene);
+        stage.setTitle("DepeFood: Login Page");
         stage.show();
         return scene;
     }

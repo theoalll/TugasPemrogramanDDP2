@@ -1,8 +1,10 @@
 package assignments.assignment4.page;
 
+import assignments.assignment4.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +20,7 @@ import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
 import assignment4.components.BillPrinter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +39,10 @@ public class CustomerMenu extends MemberMenu{
     private MainApp mainApp;
     private List<Restaurant> restoList = new ArrayList<>();
     private User user;
-    @FXML private Text textSubheading;
+    @FXML
+    private Text textSubheading;
+    @FXML
+    private Button btnBuatPesanan, btnCetakBill, btnBayarBill, btnCekSaldo, btnLogOut;
 
 
     public CustomerMenu() {
@@ -59,11 +65,12 @@ public class CustomerMenu extends MemberMenu{
         Scene scene = new Scene(root, 600 , 400);
         this.scene = scene;
         stage.setScene(scene);
-        stage.setTitle("Warning!");
+        stage.setTitle("DepeFood: Customer Main Menu");
         stage.show();
         return scene;
     }
 
+    @FXML
     private Scene createTambahPesananForm() {
         // TODO: Implementasikan method ini untuk menampilkan page tambah pesanan
         VBox menuLayout = new VBox(10);
@@ -71,12 +78,14 @@ public class CustomerMenu extends MemberMenu{
         return new Scene(menuLayout, 400, 600);
     }
 
+    @FXML
     private Scene createBillPrinter(){
         // TODO: Implementasikan method ini untuk menampilkan page cetak bill
 
         return null;
     }
 
+    @FXML
     private Scene createBayarBillForm() {
         // TODO: Implementasikan method ini untuk menampilkan page bayar bill
         VBox menuLayout = new VBox(10);
@@ -84,7 +93,7 @@ public class CustomerMenu extends MemberMenu{
         return new Scene(menuLayout, 400,600);
     }
 
-
+    @FXML
     private Scene createCekSaldoScene() {
         // TODO: Implementasikan method ini untuk menampilkan page cetak saldo
         VBox menuLayout = new VBox(10);
@@ -92,6 +101,7 @@ public class CustomerMenu extends MemberMenu{
         return new Scene(menuLayout, 400,600);
     }
 
+    @FXML
     private void handleBuatPesanan(String namaRestoran, String tanggalPemesanan, List<String> menuItems) {
         //TODO: Implementasi validasi isian pesanan
         try {
@@ -110,7 +120,24 @@ public class CustomerMenu extends MemberMenu{
         }
     }
 
-    public void displayText (String text) {
-        textSubheading.setText(text);
+    @FXML
+    private void handleLogOut() {
+        //TODO: Implementasi validasi pembayaran
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("login_page.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 600 , 400);
+            this.scene = scene;
+            stage.setScene(scene);
+            stage.setTitle("DepeFood: Login Page");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void displayText (String name) {
+        textSubheading.setText(name);
     }
 }

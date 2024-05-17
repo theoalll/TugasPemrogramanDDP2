@@ -1,5 +1,6 @@
 package assignments.assignment4.page;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,6 +38,8 @@ public class AdminMenu extends MemberMenu{
     private ListView<String> menuItemsListView = new ListView<>();
     @FXML
     private Text textSubheading;
+    @FXML
+    private Button btnTambahRestoran, btnTambahMenu, btnLihatDaftarResto, btnLogOut;
 
     public AdminMenu() {
     }
@@ -56,11 +60,12 @@ public class AdminMenu extends MemberMenu{
         Scene scene = new Scene(root, 600 , 400);
         this.scene = scene;
         stage.setScene(scene);
-        stage.setTitle("Warning!");
+        stage.setTitle("DepeFood: Admin Main Menu");
         stage.show();
         return scene;
     }
 
+    @FXML
     private Scene createAddRestaurantForm() {
         // TODO: Implementasikan method ini untuk menampilkan page tambah restoran
         VBox layout = new VBox(10);
@@ -68,14 +73,16 @@ public class AdminMenu extends MemberMenu{
         return new Scene(layout, 400, 600);
     }
 
+    @FXML
     private Scene createAddMenuForm() {
         // TODO: Implementasikan method ini untuk menampilkan page tambah menu restoran
         VBox layout = new VBox(10);
     
         return new Scene(layout, 400, 600);
     }
-    
-    
+
+
+    @FXML
     private Scene createViewRestaurantsForm() {
         // TODO: Implementasikan method ini untuk menampilkan page daftar restoran
         VBox layout = new VBox(10);
@@ -102,6 +109,23 @@ public class AdminMenu extends MemberMenu{
 
 
         }
+    }
+
+    @FXML
+    private void handleLogOut() {
+        //TODO: Implementasi validasi pembayaran
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("login_page.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 600 , 400);
+            this.scene = scene;
+            stage.setScene(scene);
+            stage.setTitle("DepeFood: Login Page");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void displayText (String text) {

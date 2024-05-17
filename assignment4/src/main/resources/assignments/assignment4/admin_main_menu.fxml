@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignments.assignment4.page.AdminMenu">
    <children>
       <ImageView fitHeight="408.0" fitWidth="608.0" layoutY="-4.0">
@@ -22,7 +21,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="325.0" layoutX="45.0" layoutY="34.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="511.0" />
-      <Text fx:id = "textSubheading" layoutX="92.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, Admin">
+      <Text fx:id="textSubheading" layoutX="92.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, Admin">
          <font>
             <Font name="Segoe UI Bold" size="34.0" />
          </font>
@@ -41,10 +40,10 @@
             <Image url="@LOGO_TRANSPARENT.png" />
          </image>
       </ImageView>
-      <Button layoutX="105.0" layoutY="253.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="72.0" text="Tambah &#10;Restoran" textAlignment="CENTER" textOverrun="CLIP" />
-      <Button layoutX="210.0" layoutY="253.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="72.0" text="Tambah &#10;Menu" textAlignment="CENTER" textOverrun="CLIP" />
-      <Button layoutX="317.0" layoutY="253.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="72.0" text="Lihat Daftar&#10;Restoran" textAlignment="CENTER" textOverrun="CLIP" />
-      <Button layoutX="423.0" layoutY="253.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="72.0" text="Logout" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="btnTambahRestoran" layoutX="105.0" layoutY="253.0" mnemonicParsing="false" onAction="#createAddRestaurantForm" prefHeight="42.0" prefWidth="72.0" text="Tambah &#10;Restoran" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="btnTambahMenu" layoutX="210.0" layoutY="253.0" mnemonicParsing="false" onAction="#createAddMenuForm" prefHeight="42.0" prefWidth="72.0" text="Tambah &#10;Menu" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="btnLihatDaftarResto" layoutX="317.0" layoutY="253.0" mnemonicParsing="false" onAction="#createViewRestaurantsForm" prefHeight="42.0" prefWidth="72.0" text="Lihat Daftar&#10;Restoran" textAlignment="CENTER" textOverrun="CLIP" />
+      <Button fx:id="btnLogOut" layoutX="423.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="42.0" prefWidth="72.0" text="Logout" textAlignment="CENTER" textOverrun="CLIP" />
       <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="213.0" layoutY="173.0">
          <image>
             <Image url="@ICON_ADD_MENU.png" />
