@@ -2,18 +2,21 @@ package assignments.assignment4.page;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import assignments.assignment3.DepeFood;
 import assignments.assignment3.Menu;
 import assignments.assignment3.Restaurant;
 import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
-import assignments.assignment4.components.BillPrinter;
+import assignment4.components.BillPrinter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,13 +36,16 @@ public class CustomerMenu extends MemberMenu{
     private MainApp mainApp;
     private List<Restaurant> restoList = new ArrayList<>();
     private User user;
+    @FXML private Text textSubheading;
 
 
-    public CustomerMenu(Stage stage, MainApp mainApp, User user) {
+    public CustomerMenu() {
+    }
+
+    public void setProperties(Stage stage, MainApp mainApp, User user) {
         this.stage = stage;
         this.mainApp = mainApp;
         this.user = user; // Store the user
-        this.scene = createBaseMenu();
         this.addOrderScene = createTambahPesananForm();
         this.billPrinter = new BillPrinter(stage, mainApp, this.user); // Pass user to BillPrinter constructor
         this.printBillScene = createBillPrinter();
@@ -48,17 +54,20 @@ public class CustomerMenu extends MemberMenu{
     }
 
     @Override
-    public Scene createBaseMenu() {
+    public Scene createBaseMenu(Parent root) {
         // TODO: Implementasikan method ini untuk menampilkan menu untuk Customer
-        VBox menuLayout = new VBox(10);
-
-        return new Scene(menuLayout, 400, 600);
+        Scene scene = new Scene(root, 600 , 400);
+        this.scene = scene;
+        stage.setScene(scene);
+        stage.setTitle("Warning!");
+        stage.show();
+        return scene;
     }
 
     private Scene createTambahPesananForm() {
         // TODO: Implementasikan method ini untuk menampilkan page tambah pesanan
         VBox menuLayout = new VBox(10);
-    
+
         return new Scene(menuLayout, 400, 600);
     }
 
@@ -99,5 +108,9 @@ public class CustomerMenu extends MemberMenu{
         } catch (Exception e) {
 
         }
+    }
+
+    public void displayText (String text) {
+        textSubheading.setText(text);
     }
 }

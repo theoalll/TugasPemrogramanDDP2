@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="408.0" fitWidth="608.0">
+         <image>
+            <Image url="@FOOD_IMAGE.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="408.0" fitWidth="608.0">
+         <image>
+            <Image url="@BLUE_RED_TRANSPARENT.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="325.0" layoutX="45.0" layoutY="38.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="511.0" />
+      <Text layoutX="92.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buat Pesanan">
+         <font>
+            <Font name="Segoe UI Bold" size="34.0" />
+         </font>
+      </Text>
+      <Text layoutX="92.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Isi data berikut dengan sesuai">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="442.0" layoutY="59.0">
+         <image>
+            <Image url="@LOGO_TRANSPARENT.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="92.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Restoran">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Text>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="92.0" layoutY="265.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Buat Pesanan!" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="204.0" layoutY="265.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="Kembali" />
+      <Button alignment="CENTER" layoutX="200.0" layoutY="163.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Show Menu" />
+      <Text layoutX="92.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Restoran">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Text>
+      <DatePicker layoutX="92.0" layoutY="229.0" promptText="Pilih Tanggal Order" />
+      <ComboBox layoutX="304.0" layoutY="265.0" prefHeight="26.0" prefWidth="200.0" promptText="Pilih Pesanan" />
+      <ListView layoutX="304.0" layoutY="142.0" prefHeight="124.0" prefWidth="200.0" />
+      <ChoiceBox layoutX="92.0" layoutY="164.0" prefHeight="26.0" prefWidth="101.0" />
+      <Text layoutX="92.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID:">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -9,7 +9,9 @@ import assignments.assignment3.Restaurant;
 import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AdminMenu extends MemberMenu{
@@ -31,23 +34,31 @@ public class AdminMenu extends MemberMenu{
     private MainApp mainApp; // Reference to MainApp instance
     private ComboBox<String> restaurantComboBox = new ComboBox<>();
     private ListView<String> menuItemsListView = new ListView<>();
+    @FXML
+    private Text textSubheading;
 
-    public AdminMenu(Stage stage, MainApp mainApp, User user) {
+    public AdminMenu() {
+    }
+
+    public void setProperties(Stage stage, MainApp mainApp, User user) {
         this.stage = stage;
         this.mainApp = mainApp;
         this.user = user; // Store the user
-        this.scene = createBaseMenu();
+//        this.scene = createBaseMenu();
         this.addRestaurantScene = createAddRestaurantForm();
         this.addMenuScene = createAddMenuForm();
         this.viewRestaurantsScene = createViewRestaurantsForm();
     }
 
     @Override
-    public Scene createBaseMenu() {
+    public Scene createBaseMenu(Parent root) {
         // TODO: Implementasikan method ini untuk menampilkan menu untuk Admin
-        VBox menuLayout = new VBox(10);
-
-        return new Scene(menuLayout, 400, 600);
+        Scene scene = new Scene(root, 600 , 400);
+        this.scene = scene;
+        stage.setScene(scene);
+        stage.setTitle("Warning!");
+        stage.show();
+        return scene;
     }
 
     private Scene createAddRestaurantForm() {
@@ -91,5 +102,9 @@ public class AdminMenu extends MemberMenu{
 
 
         }
+    }
+
+    public void displayText (String text) {
+        textSubheading.setText(text);
     }
 }

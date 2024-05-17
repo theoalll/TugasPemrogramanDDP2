@@ -2,52 +2,96 @@ package assignments.assignment4.components.form;
 
 import assignments.assignment3.DepeFood;
 import assignments.assignment3.User;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import assignments.assignment4.MainApp;
+import assignments.assignment4.App;
+import assignments.assignment4.PopUpHandler;
 import assignments.assignment4.page.AdminMenu;
 import assignments.assignment4.page.CustomerMenu;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import assignments.assignment4.MainApp;
 
-import java.util.function.Consumer;
+import java.io.IOException;
 
 public class LoginForm {
     private Stage stage;
+    private Scene scene;
     private MainApp mainApp; // MainApp instance
-    private TextField nameInput;
-    private TextField phoneInput;
+    private User user;
+    @FXML private TextField tfPhoneNumber;
+    @FXML private TextField tfUserName;
+    @FXML private Text labelSubheading;
+
+
+    @FXML private Button btnOkay;
+    public LoginForm(){}
 
     public LoginForm(Stage stage, MainApp mainApp) { // Pass MainApp instance to constructor
         this.stage = stage;
         this.mainApp = mainApp; // Store MainApp instance
     }
 
-    private Scene createLoginForm() {
+    public Scene createLoginForm() throws IOException {
         //TODO: Implementasi method untuk menampilkan komponen form login
-        GridPane grid = new GridPane();
-
-        return new Scene(grid, 400, 600);
+        DepeFood.initUser();
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login_page.fxml"));
+        scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setScene(scene);
+        stage.show();
+        return scene;
     }
 
 
-    private void handleLogin() {
+    @FXML
+    private void handleLogin (ActionEvent event) throws IOException {
         //TODO: Implementasi validasi isian form login
-        if (true) {
+        String userName = tfUserName.getText();
+        String phoneNumber = tfPhoneNumber.getText();
+        user = DepeFood.getUser(userName, phoneNumber);
+        if (user == null) {
+            String errorMsg = "User tidak ditemukan :(\nMasukkan nama dan nomor telepon yang sesuai!";
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("pop_up.fxml"));
+            Parent root = (Parent) loader.load();
 
-        } else {
+            PopUpHandler popUpHandler = loader.getController();
+            popUpHandler.displayText(errorMsg);
+
+            popUpHandler.createPopUp(root);
+        }
+        else {
+            mainApp = new MainApp();
+            mainApp.setUser(user);
+            stage = (Stage) tfPhoneNumber.getScene().getWindow();
+            FXMLLoader loader;
+            if (user.getRole().equals("Customer")) {
+                loader = new FXMLLoader(MainApp.class.getResource("user_main_menu.fxml"));
+                Parent root = loader.load();
+                CustomerMenu customerMenu = loader.getController();
+                customerMenu.setProperties(stage, mainApp, user);
+                customerMenu.displayText("Halo, " + user.getNama());
+                customerMenu.createBaseMenu(root);
+
+            }
+            else{
+                loader = new FXMLLoader(MainApp.class.getResource("admin_main_menu.fxml"));
+                Parent root = loader.load();
+                AdminMenu adminMenu = loader.getController();
+                adminMenu.setProperties(stage, mainApp, user);
+                adminMenu.displayText("Halo, " + user.getNama());
+                adminMenu.createBaseMenu(root);
+            }
 
         }
+
     }
 
-    public Scene getScene(){
+    public Scene getScene() throws IOException {
         return this.createLoginForm();
     }
 

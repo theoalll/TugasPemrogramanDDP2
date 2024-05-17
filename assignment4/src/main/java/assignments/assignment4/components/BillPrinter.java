@@ -1,4 +1,4 @@
-package assignments.assignment4.components;
+package assignment4.components;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

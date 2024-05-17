@@ -1,12 +1,13 @@
 package assignments.assignment4.page;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
 public abstract class MemberMenu {
     private Scene scene;
 
-    abstract protected Scene createBaseMenu();
+    abstract protected Scene createBaseMenu(Parent root);
 
     protected void showAlert(String title, String header, String content, Alert.AlertType c){
         Alert alert = new Alert(c);
