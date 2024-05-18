@@ -19,13 +19,14 @@ import java.io.IOException;
 public class MainApp extends Application {
     private static User user;
     private Scene scene;
-    private Stage stage;
+    private static Stage stage;
+    public static DepeFood depeFood = new DepeFood();
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = new Stage();
         MainApp mainApp = new MainApp();
-        LoginForm loginForm = new LoginForm(stage, mainApp);
+        LoginForm loginForm = new LoginForm(stage, mainApp, depeFood);
         this.scene = loginForm.getScene();
         loginForm.createLoginForm();
     }
@@ -43,8 +44,29 @@ public class MainApp extends Application {
         user = userAssigned;
     }
 
+    public static Scene changeScene (Stage stage, String fxmlName, String windowTitle) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(fxmlName+".fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600 , 400);
+
+        stage.setScene(scene);
+        stage.setTitle("DepeFood: " + windowTitle);
+        stage.show();
+        return scene;
+    }
+
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void createPopUp(String errorMsg) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("pop_up.fxml"));
+        Parent root = (Parent) loader.load();
+
+        PopUpHandler popUpHandler = loader.getController();
+        popUpHandler.displayText(errorMsg);
+
+        popUpHandler.createPopUp(root);
     }
 
 }

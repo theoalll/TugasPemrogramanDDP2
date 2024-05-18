@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignments.assignment4.page.AdminMenu">
    <children>
       <ImageView fitHeight="408.0" fitWidth="608.0" layoutX="-4.0" layoutY="-4.0">
          <image>
@@ -43,21 +42,21 @@
             <Image url="@ICON_TAMBAH_RESTO.png" />
          </image>
       </ImageView>
-      <TextField layoutX="154.0" layoutY="174.0" prefHeight="26.0" prefWidth="189.0" promptText="Masukkan Nama Restoran" />
+      <TextField fx:id="tfNamaResto$TambahMenu" layoutX="154.0" layoutY="174.0" prefHeight="26.0" prefWidth="189.0" promptText="Masukkan Nama Restoran" />
       <Text layoutX="154.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Restoran">
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" layoutX="385.0" layoutY="191.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Submit!" />
-      <Button layoutX="385.0" layoutY="253.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Kembali" />
-      <TextField layoutX="154.0" layoutY="235.0" prefHeight="26.0" prefWidth="142.0" promptText="Masukkan Nama Menu" />
+      <Button alignment="CENTER" layoutX="385.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleValidasiMenu" prefHeight="42.0" prefWidth="106.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Submit!" />
+      <Button layoutX="385.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleBtnKembali" prefHeight="26.0" prefWidth="106.0" text="Kembali" />
+      <TextField fx:id="tfNamaMenu$TambahMenu" layoutX="154.0" layoutY="235.0" prefHeight="26.0" prefWidth="142.0" promptText="Masukkan Nama Menu" />
       <Text layoutX="154.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Menu">
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <TextField layoutX="154.0" layoutY="295.0" prefHeight="26.0" prefWidth="142.0" promptText="Masukkan Harga" />
+      <TextField fx:id="tfHarga$TambahMenu" layoutX="154.0" layoutY="295.0" prefHeight="26.0" prefWidth="142.0" promptText="Masukkan Harga" />
       <Text layoutX="154.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harga">
          <font>
             <Font name="Segoe UI" size="12.0" />

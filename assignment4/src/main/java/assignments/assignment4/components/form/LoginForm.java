@@ -20,10 +20,11 @@ import assignments.assignment4.MainApp;
 import java.io.IOException;
 
 public class LoginForm {
-    private Stage stage;
+    private static Stage stage;
     private Scene scene;
     private MainApp mainApp; // MainApp instance
     private User user;
+    private static DepeFood depeFood;
     @FXML private TextField tfPhoneNumber;
     @FXML private TextField tfUserName;
     @FXML private Text labelSubheading;
@@ -32,9 +33,10 @@ public class LoginForm {
     @FXML private Button btnOkay;
     public LoginForm(){}
 
-    public LoginForm(Stage stage, MainApp mainApp) { // Pass MainApp instance to constructor
+    public LoginForm(Stage stage, MainApp mainApp, DepeFood depeFoodAssigned) { // Pass MainApp instance to constructor
         this.stage = stage;
         this.mainApp = mainApp; // Store MainApp instance
+        this.depeFood = depeFood;
     }
 
     public Scene createLoginForm() throws IOException {
@@ -56,14 +58,7 @@ public class LoginForm {
         String phoneNumber = tfPhoneNumber.getText();
         user = DepeFood.getUser(userName, phoneNumber);
         if (user == null) {
-            String errorMsg = "User tidak ditemukan :(\nMasukkan nama dan nomor telepon yang sesuai!";
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("pop_up.fxml"));
-            Parent root = (Parent) loader.load();
-
-            PopUpHandler popUpHandler = loader.getController();
-            popUpHandler.displayText(errorMsg);
-
-            popUpHandler.createPopUp(root);
+            MainApp.createPopUp("User tidak ditemukan :(\nMasukkan nama dan nomor telepon yang sesuai!");
         }
         else {
             mainApp = new MainApp();
@@ -74,7 +69,7 @@ public class LoginForm {
                 loader = new FXMLLoader(MainApp.class.getResource("user_main_menu.fxml"));
                 Parent root = loader.load();
                 CustomerMenu customerMenu = loader.getController();
-                customerMenu.setProperties(stage, mainApp, user);
+                customerMenu.setProperties(stage, mainApp, user, depeFood);
                 customerMenu.displayText("Halo, " + user.getNama());
                 customerMenu.createBaseMenu(root);
 
@@ -83,7 +78,7 @@ public class LoginForm {
                 loader = new FXMLLoader(MainApp.class.getResource("admin_main_menu.fxml"));
                 Parent root = loader.load();
                 AdminMenu adminMenu = loader.getController();
-                adminMenu.setProperties(stage, mainApp, user);
+                adminMenu.setProperties(stage, mainApp, user, depeFood);
                 adminMenu.displayText("Halo, " + user.getNama());
                 adminMenu.createBaseMenu(root);
             }

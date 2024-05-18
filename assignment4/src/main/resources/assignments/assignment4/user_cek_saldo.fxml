@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignments.assignment4.page.CustomerMenu">
    <children>
       <ImageView fitHeight="408.0" fitWidth="608.0">
          <image>
@@ -41,7 +41,7 @@
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <Button layoutX="94.0" layoutY="277.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Kembali" />
+      <Button layoutX="94.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleBtnKembali" prefHeight="26.0" prefWidth="140.0" text="Kembali" />
       <Text layoutX="178.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
          <font>
             <Font name="Segoe UI Bold" size="16.0" />

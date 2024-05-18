@@ -1,62 +1,52 @@
 package assignments.assignment4.page;
 
-import assignments.assignment4.App;
+import assignments.assignment3.Restaurant;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import assignments.assignment3.DepeFood;
-import assignments.assignment3.Menu;
-import assignments.assignment3.Restaurant;
 import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
-import assignment4.components.BillPrinter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CustomerMenu extends MemberMenu{
-    private Stage stage;
+    private static Stage stage;
     private Scene scene;
-    private Scene addOrderScene;
-    private Scene printBillScene;
-    private Scene payBillScene;
-    private Scene cekSaldoScene;
-    private BillPrinter billPrinter; // Instance of BillPrinter
-    private ComboBox<String> restaurantComboBox = new ComboBox<>();
-    private static Label label = new Label();
     private MainApp mainApp;
-    private List<Restaurant> restoList = new ArrayList<>();
     private User user;
+    private static DepeFood depeFood;
     @FXML
-    private Text textSubheading;
+    private Text textSubheading, lblOrderId$buatPesanan;
     @FXML
-    private Button btnBuatPesanan, btnCetakBill, btnBayarBill, btnCekSaldo, btnLogOut;
+    private TextField tfOrderId$BayarBill, tfOrderId$cetakBill;
+    @FXML
+    private ListView listView$bayarBill, listView$cetakBill;
+    @FXML
+    private ChoiceBox<String> choiceBox$bayarBill;
+    @FXML
+    private DatePicker datePicker$buatPesanan;
+    @FXML
+    private ComboBox<String> comboBox$buatPesanan;
+    @FXML
+    private GridPane gridPane$buatPesanan;
 
 
     public CustomerMenu() {
     }
 
-    public void setProperties(Stage stage, MainApp mainApp, User user) {
+    public void setProperties(Stage stage, MainApp mainApp, User user, DepeFood depeFood) throws IOException {
         this.stage = stage;
         this.mainApp = mainApp;
         this.user = user; // Store the user
-        this.addOrderScene = createTambahPesananForm();
-        this.billPrinter = new BillPrinter(stage, mainApp, this.user); // Pass user to BillPrinter constructor
-        this.printBillScene = createBillPrinter();
-        this.payBillScene = createBayarBillForm();
-        this.cekSaldoScene = createCekSaldoScene();
+        this.depeFood = depeFood;
     }
 
     @Override
@@ -71,34 +61,33 @@ public class CustomerMenu extends MemberMenu{
     }
 
     @FXML
-    private Scene createTambahPesananForm() {
-        // TODO: Implementasikan method ini untuk menampilkan page tambah pesanan
-        VBox menuLayout = new VBox(10);
+    private Scene createTambahPesananForm() throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("user_buat_pesanan.fxml"));
+        Parent root = loader.load();
+        BuatPesanan buatPesanan = loader.getController();
+        buatPesanan.setProperties(stage, mainApp, user, depeFood);
+        buatPesanan.displayResto(depeFood.getRestoList());
+        buatPesanan.createBaseMenu(root);
+        return scene;
+    }
 
-        return new Scene(menuLayout, 400, 600);
+
+
+    @FXML
+    private Scene createBillPrinter() throws IOException {
+        return MainApp.changeScene(stage, "user_cetak_bill", "Cetak Bill");
     }
 
     @FXML
-    private Scene createBillPrinter(){
-        // TODO: Implementasikan method ini untuk menampilkan page cetak bill
-
-        return null;
-    }
-
-    @FXML
-    private Scene createBayarBillForm() {
+    private Scene createBayarBillForm() throws IOException {
         // TODO: Implementasikan method ini untuk menampilkan page bayar bill
-        VBox menuLayout = new VBox(10);
-
-        return new Scene(menuLayout, 400,600);
+        return MainApp.changeScene(stage, "user_bayar_bill", "Bayar Bill");
     }
 
     @FXML
-    private Scene createCekSaldoScene() {
+    private Scene createCekSaldoScene() throws IOException {
         // TODO: Implementasikan method ini untuk menampilkan page cetak saldo
-        VBox menuLayout = new VBox(10);
-
-        return new Scene(menuLayout, 400,600);
+        return MainApp.changeScene(stage, "user_cek_saldo", "Cek Saldo");
     }
 
     @FXML
@@ -121,16 +110,15 @@ public class CustomerMenu extends MemberMenu{
     }
 
     @FXML
+    private Scene handleBtnKembali() throws IOException {
+        return MainApp.changeScene(stage, "user_main_menu", "Main Menu");
+    }
+
+    @FXML
     private void handleLogOut() {
         //TODO: Implementasi validasi pembayaran
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("login_page.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 600 , 400);
-            this.scene = scene;
-            stage.setScene(scene);
-            stage.setTitle("DepeFood: Login Page");
-            stage.show();
+            MainApp.changeScene(stage, "login_page", "Login Page");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -140,4 +128,7 @@ public class CustomerMenu extends MemberMenu{
     public void displayText (String name) {
         textSubheading.setText(name);
     }
+
+
 }
+
