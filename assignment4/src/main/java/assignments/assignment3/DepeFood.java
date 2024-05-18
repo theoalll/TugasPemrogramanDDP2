@@ -257,6 +257,36 @@ public class DepeFood {
         return null; 
     }
 
+    public static String handleCetakBill(String orderId){
+        System.out.println("--------------Cetak Bill--------------");
+        // Task #1: Menerima dan mengambil object Order berdasarkan orderID
+        Order order = getOrderOrNull(orderId);
+        String out = "";
+
+        // Task #2: Mencetak bill dengan format yang sesuai
+        out += ("\nBill:\n");
+        out += (String.format("Order ID: %s\n", order.getOrderId()));
+        out += (String.format("Tanggal pemesanan: %s\n", order.getTanggal()));
+        out += (String.format("Restaurant: %s\n", order.getRestaurant().getNama()));
+        out += (String.format("Lokasi pengiriman: %s\n", userLoggedIn.getLokasi()));
+        String status;
+        if ((order.getOrderFinished()) == false)
+            status = "Not Finished";
+        else
+            status = "Finished";
+        out += (String.format("Status pengiriman: %s\n", status));
+        int totalBiaya = 0;
+        out += ("Pesanan:");
+        // Task #3: Menghitung total biaya pesanan
+        for (Menu elem: order.getItems()){
+            out += (String.format("- %s %.0f\n", elem.getNamaMakanan(), elem.getHarga()));
+            totalBiaya += elem.getHarga();
+        }
+        out += (String.format("Biaya Ongkos Kirim: %s\n", OrderGenerator.validateLocation(userLoggedIn.getLokasi())));
+        out += (String.format("Total Biaya: Rp %d", totalBiaya+order.getOngkir()));
+        return out;
+    }
+
     public static void handleUpdateStatusPesanan(Order order) {
         order.setOrderFinished(true);
     }

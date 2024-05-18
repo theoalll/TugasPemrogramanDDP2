@@ -6,13 +6,12 @@ import assignments.assignment3.Restaurant;
 import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,11 +30,12 @@ public class BuatPesanan {
     @FXML
     private ChoiceBox<String> choiceBox$buatPesanan;
     @FXML
-    private GridPane gridPane$buatPesanan;
+    private ListView<String> listView$buatPesanan;
     @FXML
     private DatePicker datePicker$buatPesanan;
     @FXML
-    private ComboBox<String> comboBox$buatPesanan;
+    private Text lblOrderId$buatPesanan;
+
 
     public Scene createBaseMenu(Parent root) {
         // TODO: Implementasikan method ini untuk menampilkan menu untuk Customer
@@ -78,27 +78,32 @@ public class BuatPesanan {
     public void displayMenu(){
         String restoName = choiceBox$buatPesanan.getValue();
         Restaurant resto = depeFood.getRestaurantByName(restoName);
-        gridPane$buatPesanan.getChildren().clear();
+        listView$buatPesanan.getItems().clear();
         ArrayList<Menu> menus = resto.getMenu();
-        gridPane$buatPesanan.add(new Text("No"), 0, 0);
-        gridPane$buatPesanan.add(new Text("Nama Menu"), 1, 0);
-        gridPane$buatPesanan.add(new Text("Harga"), 2, 0);
+
         String[] list = new String[resto.getMenu().size()];
         for( int i=1; i <= menus.size(); i++) {
-            gridPane$buatPesanan.add(new Text(i+""), 0, i);
-            gridPane$buatPesanan.add(new Text(menus.get(i-1).getNamaMakanan()), 1, i);
-            gridPane$buatPesanan.add(new Text(menus.get(i-1).getHarga()+""), 2, i);
             list[i-1] = menus.get(i-1).getNamaMakanan();
         }
 //        gridPane$buatPesanan.setGridLinesVisible(true);
 
-        comboBox$buatPesanan.setItems(FXCollections.observableArrayList(list));
+        listView$buatPesanan.setItems(FXCollections.observableArrayList(list));
+        listView$buatPesanan.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @FXML
-    public void buatPesanan() {
+    public void buatPesanan() throws IOException {
+        String restoName = choiceBox$buatPesanan.getValue();
         String date = String.valueOf(datePicker$buatPesanan.getValue());
+        date = date.substring(8,10)+"/"+date.substring(5,7)+"/"+date.substring(0,4);
         System.out.println(date);
+        ObservableList<String> selectedItems =  listView$buatPesanan.getSelectionModel().getSelectedItems();
+        if (selectedItems.size()==0) {
+            MainApp.createPopUp("Tidak ada menu yang dipesan!");
+            return;
+        }
+        String orderId = depeFood.handleBuatPesanan(restoName, date, selectedItems.size(), selectedItems);
+        lblOrderId$buatPesanan.setText("Order ID: "+orderId);
     }
 
     @FXML

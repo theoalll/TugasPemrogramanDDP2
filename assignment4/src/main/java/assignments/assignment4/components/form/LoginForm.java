@@ -2,8 +2,6 @@ package assignments.assignment4.components.form;
 
 import assignments.assignment3.DepeFood;
 import assignments.assignment3.User;
-import assignments.assignment4.App;
-import assignments.assignment4.PopUpHandler;
 import assignments.assignment4.page.AdminMenu;
 import assignments.assignment4.page.CustomerMenu;
 import javafx.event.ActionEvent;
@@ -23,7 +21,7 @@ public class LoginForm {
     private static Stage stage;
     private Scene scene;
     private MainApp mainApp; // MainApp instance
-    private User user;
+    private static User user;
     private static DepeFood depeFood;
     @FXML private TextField tfPhoneNumber;
     @FXML private TextField tfUserName;
@@ -42,7 +40,7 @@ public class LoginForm {
     public Scene createLoginForm() throws IOException {
         //TODO: Implementasi method untuk menampilkan komponen form login
         DepeFood.initUser();
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login_page.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login_page.fxml"));
         scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setScene(scene);
         stage.setTitle("DepeFood: Login Page");
@@ -63,6 +61,7 @@ public class LoginForm {
         else {
             mainApp = new MainApp();
             mainApp.setUser(user);
+            depeFood.setPenggunaLoggedIn(user);
             stage = (Stage) tfPhoneNumber.getScene().getWindow();
             FXMLLoader loader;
             if (user.getRole().equals("Customer")) {

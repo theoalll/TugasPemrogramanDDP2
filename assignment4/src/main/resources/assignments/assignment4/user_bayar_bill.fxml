@@ -44,12 +44,12 @@
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" layoutX="92.0" layoutY="264.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Bayar Bill!">
+      <Button alignment="CENTER" layoutX="92.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleBayarBillPage" prefHeight="27.0" prefWidth="88.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Bayar Bill!">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <TextField fx:id="tfOrderId$BayarBill" layoutX="92.0" layoutY="167.0" prefHeight="26.0" prefWidth="165.0" promptText="Masukkan Order ID" />
+      <TextField fx:id="tfOrderId" layoutX="92.0" layoutY="167.0" prefHeight="26.0" prefWidth="165.0" promptText="Masukkan Order ID" />
       <Button layoutX="92.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleBtnKembali" prefHeight="26.0" prefWidth="66.0" text="Kembali" />
       <Text layoutX="92.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opsi Pembayaran">
          <font>
@@ -57,9 +57,9 @@
          </font>
       </Text>
       <ChoiceBox fx:id="choiceBox$bayarBill" layoutX="92.0" layoutY="225.0" prefHeight="26.0" prefWidth="166.0" />
-      <Button alignment="CENTER" layoutX="185.0" layoutY="264.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Lihat Bill" />
-      <ListView fx:id="listView$bayarBill" layoutX="300.0" layoutY="142.0" prefHeight="154.0" prefWidth="224.0" />
-      <Text layoutX="300.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Harga:">
+      <Button alignment="CENTER" layoutX="185.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleCetakBill" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Lihat Bill" />
+      <ListView fx:id="listView" layoutX="300.0" layoutY="142.0" prefHeight="154.0" prefWidth="224.0" />
+      <Text fx:id="textTotalHarga$bayarBill" layoutX="300.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Biaya:">
          <font>
             <Font name="Segoe UI Bold" size="16.0" />
          </font>

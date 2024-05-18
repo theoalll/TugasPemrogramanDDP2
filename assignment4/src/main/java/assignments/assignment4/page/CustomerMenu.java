@@ -1,5 +1,6 @@
 package assignments.assignment4.page;
 
+import assignments.assignment3.Order;
 import assignments.assignment3.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -21,28 +22,23 @@ public class CustomerMenu extends MemberMenu{
     private static Stage stage;
     private Scene scene;
     private MainApp mainApp;
-    private User user;
+    private static User user;
     private static DepeFood depeFood;
+    private boolean hideSaldo = true;
     @FXML
-    private Text textSubheading, lblOrderId$buatPesanan;
+    private Text textSubheading, textTotalHarga$bayarBill, namaUser$cekSaldo, paymentMethod$cekSaldo, saldo$cekSaldo;
     @FXML
-    private TextField tfOrderId$BayarBill, tfOrderId$cetakBill;
+    private TextField tfOrderId;
     @FXML
-    private ListView listView$bayarBill, listView$cetakBill;
+    private ListView listView;
     @FXML
     private ChoiceBox<String> choiceBox$bayarBill;
-    @FXML
-    private DatePicker datePicker$buatPesanan;
-    @FXML
-    private ComboBox<String> comboBox$buatPesanan;
-    @FXML
-    private GridPane gridPane$buatPesanan;
 
 
     public CustomerMenu() {
     }
 
-    public void setProperties(Stage stage, MainApp mainApp, User user, DepeFood depeFood) throws IOException {
+    public void setProperties(Stage stage, MainApp mainApp, User user, DepeFood depeFood) {
         this.stage = stage;
         this.mainApp = mainApp;
         this.user = user; // Store the user
@@ -91,21 +87,41 @@ public class CustomerMenu extends MemberMenu{
     }
 
     @FXML
-    private void handleBuatPesanan(String namaRestoran, String tanggalPemesanan, List<String> menuItems) {
+    private void handleCetakBill() {
         //TODO: Implementasi validasi isian pesanan
-        try {
-
-        } catch (Exception e) {
-
+        String orderId = tfOrderId.getText();
+        String bill = depeFood.handleCetakBill(orderId);
+        String[] lines = bill.split("\\r?\\n");
+        listView.setItems(FXCollections.observableArrayList(lines));
+        if (textTotalHarga$bayarBill!= null) {
+            textTotalHarga$bayarBill.setText(lines[lines.length-1]);
         }
     }
 
-    private void handleBayarBill(String orderID, int pilihanPembayaran) {
+
+    @FXML
+    private void handleBayarBillPage() throws IOException {
+        String orderId = tfOrderId.getText();
+        String paymentMethod = choiceBox$bayarBill.getValue();
+        handleBayarBill(orderId, paymentMethod);
+    }
+
+    private void handleBayarBill(String orderId, String paymentMethod) throws IOException { // disini harusnya int pilihanPembayaran, bukan String paymentMethod
         //TODO: Implementasi validasi pembayaran
-        try {
-
-        } catch (Exception e) {
-
+        Order order = depeFood.findUserOrderById(orderId);
+        if (order.getOrderFinished() == true) {
+            MainApp.createPopUp("Order ini sudah lunas!");
+            return;
+        }
+        else {
+            depeFood.handleBayarBill(orderId, paymentMethod);
+            if (order.getOrderFinished() == true) {
+                MainApp.createPopUp("Berhasil melakukan payment.");
+                handleCetakBill();
+                return;
+            } else {
+                MainApp.createPopUp("Gagal melakukan payment :(\nUser belum memiliki metode pembayaran ini.");
+            }
         }
     }
 
@@ -121,6 +137,21 @@ public class CustomerMenu extends MemberMenu{
             MainApp.changeScene(stage, "login_page", "Login Page");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    private void handleCekSaldo() {
+        if (hideSaldo) {
+            paymentMethod$cekSaldo.setText("Metode bayar: " + user.getPaymentSystem().getClass().getSimpleName());
+            namaUser$cekSaldo.setText(depeFood.getUserLoggedIn().getNama());
+            saldo$cekSaldo.setText("Rp "+depeFood.getUserLoggedIn().getSaldo());
+            hideSaldo = false;
+        }
+        else {
+            saldo$cekSaldo.setText("Rp \u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022");
+            hideSaldo = true;
         }
 
     }

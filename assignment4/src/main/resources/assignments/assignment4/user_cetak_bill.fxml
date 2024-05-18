@@ -43,12 +43,12 @@
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" layoutX="92.0" layoutY="204.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Cetak Bill!">
+      <Button alignment="CENTER" layoutX="92.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleCetakBill" prefHeight="27.0" prefWidth="88.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Cetak Bill!">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <ListView fx:id="listView$cetakBill" layoutX="280.0" layoutY="142.0" prefHeight="186.0" prefWidth="224.0" />
-      <TextField fx:id="tfOrderId$cetakBill" layoutX="92.0" layoutY="167.0" prefHeight="26.0" prefWidth="165.0" promptText="Masukkan Order ID" />
+      <ListView fx:id="listView" layoutX="280.0" layoutY="142.0" prefHeight="186.0" prefWidth="224.0" />
+      <TextField fx:id="tfOrderId" layoutX="92.0" layoutY="167.0" prefHeight="26.0" prefWidth="165.0" promptText="Masukkan Order ID" />
       <Button layoutX="190.0" layoutY="205.0" mnemonicParsing="false" onAction="#handleBtnKembali" prefHeight="26.0" prefWidth="66.0" text="Kembali" />
    </children>
 </AnchorPane>
