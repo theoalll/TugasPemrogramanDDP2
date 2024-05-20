@@ -103,6 +103,7 @@ public class OrderGenerator {
         char[] locationList = { 'P', 'U', 'T', 'S', 'B' };
 
         return location.length() == 1 && new String(locationList).contains(location);
+
     }
 
     public static boolean validateOrderID(String orderID) {

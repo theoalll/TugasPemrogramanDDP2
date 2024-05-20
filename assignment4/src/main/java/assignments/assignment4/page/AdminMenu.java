@@ -3,38 +3,27 @@ package assignments.assignment4.page;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import assignments.assignment3.DepeFood;
 import assignments.assignment3.Menu;
 import assignments.assignment3.Restaurant;
 import assignments.assignment3.User;
 import assignments.assignment4.MainApp;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.TableView;
-
-
 
 public class AdminMenu extends MemberMenu{
     private static Stage stage;
     private Scene scene;
     private User user;
-    private Scene addRestaurantScene;
-    private Scene addMenuScene;
-    private Scene viewRestaurantsScene;
-    private List<Restaurant> restoList = new ArrayList<>();
     private MainApp mainApp; // Reference to MainApp instance
-    private ComboBox<String> restaurantComboBox = new ComboBox<>();
-    private ListView<String> menuItemsListView = new ListView<>();
     private static DepeFood depeFood;
     @FXML
     private Text textSubheading;
@@ -46,6 +35,14 @@ public class AdminMenu extends MemberMenu{
     public AdminMenu() {
     }
 
+    /*
+     * Method untuk menset properties yang dibutuhkan oleh class ini
+     * @param stage (Stage) : Stage aplikasi
+     * @param mainApp (MainApp) : MainApp instance
+     * @param user (User) : User yang sedang login
+     * @param depeFood (DepeFood) : DepeFood instance
+     * @return void
+     */
     public void setProperties(Stage stage, MainApp mainApp, User user, DepeFood depeFood) {
         this.stage = stage;
         this.mainApp = mainApp;
@@ -53,39 +50,70 @@ public class AdminMenu extends MemberMenu{
         this.depeFood = depeFood;
     }
 
+    /*
+     * Method untuk menghandle event kembali, Redirect ke halaman main menu
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private void handleBtnKembali() throws IOException {
         MainApp.changeScene(stage, "admin_main_menu", "Main Menu");
     }
 
+    /* 
+     * Method untuk membuat form menu utama admin yang menampilkan menu utama admin
+     * @param root (Parent) : Parent root dari scene
+     * @return Scene
+
+     */
     @Override
     public Scene createBaseMenu(Parent root) {
-        // TODO: Implementasikan method ini untuk menampilkan menu untuk Admin
         Scene scene = new Scene(root, 600 , 400);
         this.scene = scene;
         stage.setScene(scene);
         stage.setTitle("DepeFood: Admin Main Menu");
+        stage.getIcons().add(new Image(MainApp.class.getResource("ICON_TEXT_ONLY.png").toExternalForm()));
+        stage.setResizable(false);
         stage.show();
         return scene;
     }
 
+    /*
+     * Menampilkan halaman yang berisi form untuk menambahkan restoran baru 
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private Scene createAddRestaurantForm() throws IOException {
-        // TODO: Implementasikan method ini untuk menampilkan page tambah restoran
         return MainApp.changeScene(stage, "admin_tambah_restoran", "Tambah Restoran");
     }
+
+    /*
+     * Menampilkan halaman yang berisi form untuk menambahkan menu baru pada restoran yang sudah terdaftar. 
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private Scene createAddMenuForm() throws IOException {
-        // TODO: Implementasikan method ini untuk menampilkan page tambah menu restoran
         return MainApp.changeScene(stage, "admin_tambah_menu", "Tambah Menu");
     }
 
+    /*
+     * Method untuk menghandle event validasi restoran, Menambahkan restoran baru ke dalam list restoran
+     * @return void
+     * @throws IOException
+     */
     @FXML
     private void handleValidasiResto() throws IOException {
         String namaResto = tfNamaResto.getText();
         handleTambahRestoran(namaResto);
     }
 
+    /*
+     * Method untuk menghandle event validasi menu, Menambahkan menu baru ke dalam list menu restoran
+     * @return void
+     * @throws IOException
+     */
     @FXML
     private void handleValidasiMenu() throws IOException {
         String namaResto = tfNamaResto$TambahMenu.getText();
@@ -95,11 +123,11 @@ public class AdminMenu extends MemberMenu{
 
         Restaurant resto = depeFood.findRestaurant(namaResto);
         if (resto == null){
-            MainApp.createPopUp("Nama restoran tidak ditemukan :(\nMasukkan nama restoran yang terdaftar.");
+            MainApp.createPopUp("Nama restoran tidak ditemukan :(\nMasukkan nama restoran yang terdaftar.", "WARNING");
             return;
         }
         if (namaMenu.equals("")) {
-            MainApp.createPopUp("Nama menu tidak boleh kosong.");
+            MainApp.createPopUp("Nama menu tidak boleh kosong.", "WARNING");
             return;
         }
         try {
@@ -109,39 +137,57 @@ public class AdminMenu extends MemberMenu{
             }
         }
         catch (Exception e) {
-            MainApp.createPopUp("Masukkan harga yang valid!");
+            MainApp.createPopUp("Masukkan harga yang valid!", "WARNING");
             return;
         }
         handleTambahMenuRestoran(resto, namaMenu, hargaDouble);
     }
 
 
+    /*
+     * Menampilkan halaman yang berisi daftar restoran yang terdaftar. 
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private Scene createViewRestaurantsForm() throws IOException {
-        // TODO: Implementasikan method ini untuk menampilkan page daftar restoran
         return MainApp.changeScene(stage, "admin_lihat_daftar_menu", "Lihat Daftar Menu");
     }
     
-
+    /*
+     * Menampilkan alert untuk memberikan verifikasi atas proses penambahan restoran yang dilakukan.
+     * @param nama (String) : nama restoran yang akan ditambahkan
+     * @return void
+     * @throws IOException
+     */
     private void handleTambahRestoran(String nama) throws IOException {
-        //TODO: Implementasi validasi isian nama Restoran
         String validName = DepeFood.getValidRestaurantName(nama);
         if (validName.equals(nama)) {
-            MainApp.createPopUp("Restoran dengan nama " + nama + " berhasil dibuat!");
+            MainApp.createPopUp("Restoran dengan nama " + nama + " berhasil dibuat!", "SUCCESS");
             depeFood.handleTambahRestoran(nama);
         }
         else {
-            MainApp.createPopUp(validName);
+            MainApp.createPopUp(validName, "FAILED");
         }
     }
 
-
+    /*
+     * Menampilkan alert untuk memberikan verifikasi atas proses penambahan menu yang dilakukan.
+     * @param restaurant (Restaurant) : restoran yang akan ditambahkan menu
+     * @param itemName (String) : nama menu yang akan ditambahkan
+     * @param price (double) : harga menu yang akan ditambahkan
+     * @return void
+     * @throws IOException
+     */
     private void handleTambahMenuRestoran(Restaurant restaurant, String itemName, double price) throws IOException {
-        //TODO: Implementasi validasi isian menu Restoran
         depeFood.handleTambahMenuRestoran(restaurant, itemName, price);
-        MainApp.createPopUp(String.format("Menu dengan nama %s berharga %.2f berhasil dibuat!", itemName, price));
+        MainApp.createPopUp(String.format("Menu dengan nama %s berharga %.2f berhasil dibuat!", itemName, price), "SUCCESS");
     }
 
+    /*
+     * Menampilkan halaman yang berisi daftar menu yang terdaftar pada restoran yang dipilih.
+     * @return Scene
+     */
     @FXML
     private Scene handleLogOut() {
         //TODO: Implementasi validasi pembayaran
@@ -160,6 +206,11 @@ public class AdminMenu extends MemberMenu{
 
     }
 
+    /*
+     * Menampilkan halaman yang berisi daftar menu yang terdaftar pada restoran yang dipilih.
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private void handleLihatMenu() throws IOException {
         gridPane$lihatMenu.getChildren().clear();
@@ -167,7 +218,7 @@ public class AdminMenu extends MemberMenu{
         String namaResto = tfNamaResto$LihatDaftarMenu.getText();
         Restaurant resto = depeFood.findRestaurant(namaResto);
         if (resto == null){
-            MainApp.createPopUp("Nama restoran tidak ditemukan :(\nMasukkan nama restoran yang terdaftar.");
+            MainApp.createPopUp("Nama restoran tidak ditemukan :(\nMasukkan nama restoran yang terdaftar.", "WARNING");
             return;
         }
         ArrayList<Menu> menus = resto.getMenu();
@@ -182,6 +233,11 @@ public class AdminMenu extends MemberMenu{
         gridPane$lihatMenu.setGridLinesVisible(true);
     }
 
+    /*
+     * Menampilkan text pada subheading
+     * @param text (String) : text yang akan ditampilkan
+     * @return void
+     */
     public void displayText (String text) {
         textSubheading.setText(text);
     }

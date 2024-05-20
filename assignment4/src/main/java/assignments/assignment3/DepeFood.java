@@ -3,18 +3,13 @@ package assignments.assignment3;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 import assignments.assignment1.OrderGenerator;
 import assignments.assignment3.payment.CreditCardPayment;
 import assignments.assignment3.payment.DebitPayment;
 import assignments.assignment3.payment.DepeFoodPaymentSystem;
-import assignments.assignment3.systemCLI.AdminSystemCLI;
-import assignments.assignment3.systemCLI.CustomerSystemCLI;
-import assignments.assignment3.systemCLI.UserSystemCLI;
 
 public class DepeFood {
     private static ArrayList<User> userList;
@@ -31,9 +26,6 @@ public class DepeFood {
 
     public static void initUser() {
         userList = new ArrayList<>();
-        userList.add(new User("2", "2", "admin@gmail.com", "-", "Admin", new CreditCardPayment(), 0));
-        userList.add(
-                new User("1", "1", "thomas.n@gmail.com", "P", "Customer", new DebitPayment(), 500000));
         userList.add(
                 new User("Thomas N", "9928765403", "thomas.n@gmail.com", "P", "Customer", new DebitPayment(), 500000));
         userList.add(new User("Sekar Andita", "089877658190", "dita.sekar@gmail.com", "B", "Customer",
@@ -162,34 +154,30 @@ public class DepeFood {
         return order.getOrderId();
     }
 
-    public static void handleBayarBill(String orderId, String paymentOption) {
+    public static String handleBayarBill(String orderId, String paymentOption) {
         while (true) {
             Order order = getOrderOrNull(orderId);
 
             if (order == null) {
-                System.out.println("Order ID tidak dapat ditemukan.\n");
-                continue;
+                return ("Order ID tidak dapat ditemukan.\n");
             }
 
             if (order.getOrderFinished()) {
-                System.out.println("Pesanan dengan ID ini sudah lunas!\n");
-                return;
+                return ("Pesanan dengan ID ini sudah lunas!\n");
             }
 
             System.out.print("Pilihan Metode Pembayaran: ");
 
-            if (!paymentOption.equals("Credit Card") && !paymentOption.equals("Debit")) {
-                System.out.println("Pilihan tidak valid, silakan coba kembali\n");
-                continue;
+            if (!paymentOption.equals("CreditCardPayment") && !paymentOption.equals("DebitPayment")) {
+                return ("Pilihan tidak valid, silakan coba kembali\n");
             }
 
             DepeFoodPaymentSystem paymentSystem = userLoggedIn.getPaymentSystem();
 
             boolean isCreditCard = paymentSystem instanceof CreditCardPayment;
 
-            if ((isCreditCard && paymentOption.equals("Debit")) || (!isCreditCard && paymentOption.equals("Credit Card"))) {
-                System.out.println("User belum memiliki metode pembayaran ini!\n");
-                continue;
+            if ((isCreditCard && paymentOption.equals("DebitPayment")) || (!isCreditCard && paymentOption.equals("CreditCardPayment"))) {
+                return ("User belum memiliki metode pembayaran ini!\n");
             }
 
             long amountToPay = 0;
@@ -197,9 +185,7 @@ public class DepeFood {
             try {
                 amountToPay = paymentSystem.processPayment(userLoggedIn.getSaldo(), (long) order.getTotalHarga());
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println();
-                continue;
+                return (e.getMessage());
             }
 
             long saldoLeft = userLoggedIn.getSaldo() - amountToPay;
@@ -212,15 +198,15 @@ public class DepeFood {
             symbols.setGroupingSeparator('.');
             decimalFormat.setDecimalFormatSymbols(symbols);
 
-            System.out.printf("Berhasil Membayar Bill sebesar Rp %s", decimalFormat.format(amountToPay));
+            return String.format("Berhasil Membayar Bill sebesar Rp %s", decimalFormat.format(amountToPay));
 
-            return;
         }
     }
 
     public static Order getOrderOrNull(String orderId) {
         for (User user : userList) {
             for (Order order : user.getOrderHistory()) {
+                System.out.println(order.getOrderId());
                 if (order.getOrderId().equals(orderId)) {
                     return order;
                 }
@@ -264,7 +250,7 @@ public class DepeFood {
         String out = "";
 
         // Task #2: Mencetak bill dengan format yang sesuai
-        out += ("\nBill:\n");
+        out += ("Bill:\n");
         out += (String.format("Order ID: %s\n", order.getOrderId()));
         out += (String.format("Tanggal pemesanan: %s\n", order.getTanggal()));
         out += (String.format("Restaurant: %s\n", order.getRestaurant().getNama()));
@@ -276,13 +262,13 @@ public class DepeFood {
             status = "Finished";
         out += (String.format("Status pengiriman: %s\n", status));
         int totalBiaya = 0;
-        out += ("Pesanan:");
+        out += ("Pesanan:\n");
         // Task #3: Menghitung total biaya pesanan
         for (Menu elem: order.getItems()){
             out += (String.format("- %s %.0f\n", elem.getNamaMakanan(), elem.getHarga()));
             totalBiaya += elem.getHarga();
         }
-        out += (String.format("Biaya Ongkos Kirim: %s\n", OrderGenerator.validateLocation(userLoggedIn.getLokasi())));
+        out += (String.format("Biaya Ongkos Kirim: %s\n", userLoggedIn.getLokasi()));
         out += (String.format("Total Biaya: Rp %d", totalBiaya+order.getOngkir()));
         return out;
     }

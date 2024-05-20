@@ -51,13 +51,13 @@
          </font>
       </Button>
       <Button layoutX="204.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleBtnKembali" prefHeight="26.0" prefWidth="66.0" text="Kembali" />
-      <Button alignment="CENTER" layoutX="200.0" layoutY="163.0" mnemonicParsing="false" onAction="#displayMenu" prefHeight="27.0" prefWidth="66.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Show Menu" />
+      <Button alignment="CENTER" layoutX="200.0" layoutY="163.0" mnemonicParsing="false" onAction="#createLihatMenuView" prefHeight="27.0" prefWidth="66.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Show Menu" />
       <Text layoutX="92.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nama Restoran">
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <DatePicker fx:id="datePicker$buatPesanan" layoutX="92.0" layoutY="229.0" promptText="Pilih Tanggal Order" />
+      <DatePicker fx:id="datePicker$buatPesanan" editable="false" layoutX="92.0" layoutY="229.0" promptText="Pilih Tanggal Order" />
       <ChoiceBox fx:id="choiceBox$buatPesanan" layoutX="92.0" layoutY="164.0" prefHeight="26.0" prefWidth="101.0" />
       <Text fx:id="lblOrderId$buatPesanan" layoutX="92.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID:">
          <font>

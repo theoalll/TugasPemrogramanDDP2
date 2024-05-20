@@ -8,18 +8,18 @@ import assignments.assignment4.MainApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.swing.text.html.ListView;
 
 public class BuatPesanan {
     private static Stage stage;
@@ -36,29 +36,32 @@ public class BuatPesanan {
     @FXML
     private Text lblOrderId$buatPesanan;
 
-
+    /*
+     * Menampilkan halaman untuk membuat pesanan
+     * @param root (Parent) : Parent root dari scene
+     * @return Scene
+     * @throws IOException
+     */
     public Scene createBaseMenu(Parent root) {
-        // TODO: Implementasikan method ini untuk menampilkan menu untuk Customer
         Scene scene = new Scene(root, 600 , 400);
         this.scene = scene;
         stage.setScene(scene);
         stage.setTitle("DepeFood: Buat Menu");
+        stage.getIcons().add(new Image(MainApp.class.getResource("ICON_TEXT_ONLY.png").toExternalForm()));
+        stage.setResizable(false);
         stage.show();
         return scene;
     }
 
-    @FXML
-    private Scene createTambahPesananFormWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("user_buat_pesanan.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 400);
-        this.scene = scene;
-        stage.setScene(scene);
-        stage.setTitle("DepeFood: Buat Pesanan");
-        stage.show();
-        return scene;
-    }
-
+    /*
+     * Method untuk menset properties yang dibutuhkan oleh class ini
+     * @param stage (Stage) : Stage aplikasi
+     * @param mainApp (MainApp) : MainApp instance
+     * @param user (User) : User yang sedang login
+     * @param depeFood (DepeFood) : DepeFood instance
+     * @return void
+     * @throws IOException
+     */
     public void setProperties(Stage stage, MainApp mainApp, User user, DepeFood depeFood) throws IOException {
         this.stage = stage;
         this.mainApp = mainApp;
@@ -66,46 +69,85 @@ public class BuatPesanan {
         this.depeFood = depeFood;
     }
 
-
+    /*
+     * Method untuk menampilkan restoran yang tersedia pada choice box untuk dipilih oleh user
+     * @param listResto (List<Restaurant>) : List restoran yang akan ditampilkan
+     * @return void
+     */
     public void displayResto(List<Restaurant> listResto) {
+        if (listResto.size() == 0) {
+            String[] list = {"Belum ada restoran terdaftar"};
+            choiceBox$buatPesanan.setItems(FXCollections.observableArrayList(list));
+            choiceBox$buatPesanan.setDisable(true);
+            return;
+        }
+
+        choiceBox$buatPesanan.setDisable(false);
         String[] list = new String[listResto.size()];
         for (int i = 0; i < listResto.size(); i++)
             list[i] = listResto.get(i).getNama();
         choiceBox$buatPesanan.setItems(FXCollections.observableArrayList(list));
     }
 
+    /*
+     * Menampilkan halaman yang berisi form untuk menerima nama restoran dan menampilkan daftar menu dari restoran tersebut. 
+     * @return void
+     * @throws IOException
+     */
     @FXML
-    public void displayMenu(){
+    public void createLihatMenuView() throws IOException {
         String restoName = choiceBox$buatPesanan.getValue();
         Restaurant resto = depeFood.getRestaurantByName(restoName);
+        if (resto == null ){
+            MainApp.createPopUp("Belum ada restoran yang terpilih!", "WARNING");
+            return;
+        }
         listView$buatPesanan.getItems().clear();
         ArrayList<Menu> menus = resto.getMenu();
 
-        String[] list = new String[resto.getMenu().size()];
-        for( int i=1; i <= menus.size(); i++) {
-            list[i-1] = menus.get(i-1).getNamaMakanan();
+        if (menus.size() == 0){
+            String[] list = {"Restoran belum memiliki daftar menu :("};
+            listView$buatPesanan.setItems(FXCollections.observableArrayList(list));
+            listView$buatPesanan.setDisable(true);
         }
-//        gridPane$buatPesanan.setGridLinesVisible(true);
-
-        listView$buatPesanan.setItems(FXCollections.observableArrayList(list));
-        listView$buatPesanan.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        else {
+            choiceBox$buatPesanan.setDisable(false);
+            String[] list = new String[resto.getMenu().size()];
+            for (int i = 1; i <= menus.size(); i++) {
+                list[i - 1] = menus.get(i - 1).getNamaMakanan();
+            }
+            listView$buatPesanan.setItems(FXCollections.observableArrayList(list));
+            listView$buatPesanan.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        }
     }
 
+    /*
+     * Method untuk menghandle event buat pesanan, Menambahkan pesanan ke dalam list pesanan
+     * @return void
+     * @throws IOException
+     */
     @FXML
     public void buatPesanan() throws IOException {
+        ObservableList<String> selectedItems =  listView$buatPesanan.getSelectionModel().getSelectedItems();
         String restoName = choiceBox$buatPesanan.getValue();
         String date = String.valueOf(datePicker$buatPesanan.getValue());
-        date = date.substring(8,10)+"/"+date.substring(5,7)+"/"+date.substring(0,4);
-        System.out.println(date);
-        ObservableList<String> selectedItems =  listView$buatPesanan.getSelectionModel().getSelectedItems();
-        if (selectedItems.size()==0) {
-            MainApp.createPopUp("Tidak ada menu yang dipesan!");
-            return;
-        }
-        String orderId = depeFood.handleBuatPesanan(restoName, date, selectedItems.size(), selectedItems);
-        lblOrderId$buatPesanan.setText("Order ID: "+orderId);
+        CustomerMenu.handleTambahPesanan(restoName, date, selectedItems);
     }
 
+    /*
+     * Method untuk menset order id pada label
+     * @param orderId (String) : Order Id yang akan ditampilkan
+     * @return void
+     */
+    public void setLabelOrderId(String orderId) {
+        lblOrderId$buatPesanan.setText("Order ID: " + orderId);
+    }
+
+    /*
+     * Method untuk menghandle event kembali, Redirect ke halaman main menu
+     * @return Scene
+     * @throws IOException
+     */
     @FXML
     private Scene handleBtnKembali() throws IOException {
         return MainApp.changeScene(stage, "user_main_menu", "Main Menu");

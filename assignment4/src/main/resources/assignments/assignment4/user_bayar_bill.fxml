@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -56,7 +57,6 @@
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="choiceBox$bayarBill" layoutX="92.0" layoutY="225.0" prefHeight="26.0" prefWidth="166.0" />
       <Button alignment="CENTER" layoutX="185.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleCetakBill" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: #86d97b; -fx-border-color: #e0e0e0;" text="Lihat Bill" />
       <ListView fx:id="listView" layoutX="300.0" layoutY="142.0" prefHeight="154.0" prefWidth="224.0" />
       <Text fx:id="textTotalHarga$bayarBill" layoutX="300.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Biaya:">
@@ -64,5 +64,11 @@
             <Font name="Segoe UI Bold" size="16.0" />
          </font>
       </Text>
+      <RadioButton fx:id="rbcc$bayarBill" layoutX="93.0" layoutY="227.0" mnemonicParsing="false" text="Credit card" textOverrun="CLIP">
+         <toggleGroup>
+            <ToggleGroup fx:id="Group" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbdp$bayarBill" layoutX="198.0" layoutY="227.0" mnemonicParsing="false" text="Debit" textOverrun="CLIP" toggleGroup="$Group" />
    </children>
 </AnchorPane>
