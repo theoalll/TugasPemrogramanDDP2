@@ -1,7 +1,5 @@
 package assignments.assignment4.components;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,15 +12,13 @@ import assignments.assignment4.MainApp;
 
 import java.io.IOException;
 
-import javax.swing.text.html.ListView;
-
 public class BillPrinter {
     private DepeFood depeFood;
     private static Stage stage;
     private MainApp mainApp;
     private User user;
     @FXML
-    private ListView listView;
+    private ListView<String> listView;
 
     @FXML
     private TextField tfOrderId;
@@ -88,6 +84,7 @@ public class BillPrinter {
         String bill = depeFood.handleCetakBill(orderId);
         String[] lines = bill.split("\\r?\\n");
         listView.setItems(FXCollections.observableArrayList(lines));
+
     }
 
     /*

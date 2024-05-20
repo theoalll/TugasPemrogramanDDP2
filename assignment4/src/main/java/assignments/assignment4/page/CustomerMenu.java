@@ -20,8 +20,6 @@ import assignments.assignment4.components.BillPrinter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.text.html.ListView;
-
 public class CustomerMenu extends MemberMenu{
     private static Stage stage;
     private Scene scene;
@@ -40,7 +38,7 @@ public class CustomerMenu extends MemberMenu{
     @FXML
     private RadioButton rbcc$bayarBill, rbdp$bayarBill;
     @FXML
-    private ListView listView;
+    private ListView<String> listView;
 
     public CustomerMenu() {
     }
